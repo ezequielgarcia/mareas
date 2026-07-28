@@ -8,6 +8,8 @@ donde su atracción es más débil.
 Esto no es un detalle técnico. Es el corazón del asunto, y el sitio donde casi
 todas las explicaciones divulgativas se equivocan.
 
+![Campo de fuerzas diferencial y el perfil 3cos²ψ−1](img/01-dos-bultos.png)
+
 ---
 
 ## La clave: la Tierra está en caída libre

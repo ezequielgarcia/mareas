@@ -7,6 +7,8 @@ del Sol, destroza cometas y desgarra estrellas.
 Todo con el mismo `GM/d³` del que hablamos en
 [04-por-que-la-luna-gana-al-sol.md](04-por-que-la-luna-gana-al-sol.md).
 
+![Marea sobre las lunas de Júpiter y Saturno, y en el horizonte de un agujero negro](img/05-sistema-solar.png)
+
 ---
 
 ## Ío: el cuerpo más volcánico del sistema solar

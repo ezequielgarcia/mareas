@@ -5,6 +5,8 @@ una marea que es menos de la mitad de la lunar.
 
 La razón es una sola: la marea no va como 1/d², va como **1/d³**.
 
+![GM/d³ para la Luna, el Sol, los planetas y una persona a un metro](img/04-ley-del-cubo.png)
+
 ---
 
 ## De dónde sale el cubo

@@ -22,6 +22,8 @@ Esto no es un fallo del cálculo. Es el resultado más importante que hay que
 entender: **la gravedad pone el reloj de la marea, pero la amplitud la pone el
 océano.**
 
+![Carreras de marea reales frente a la de equilibrio, y la resonancia de Merian](img/06-equilibrio-vs-real.png)
+
 ---
 
 ## El error de Newton (y la corrección de Laplace)

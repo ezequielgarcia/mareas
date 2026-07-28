@@ -5,6 +5,8 @@ Respuesta corta: porque la Luna **sí rota**, exactamente una vez por órbita.
 Respuesta interesante: porque las mareas la frenaron hasta que rotó a ese ritmo,
 y ahora un bulto congelado en su corteza la mantiene sujeta.
 
+![Libración en longitud y latitud, y recorrido del punto sub-terrestre](img/03-libracion.png)
+
 ---
 
 ## Primero, deshagamos el malentendido

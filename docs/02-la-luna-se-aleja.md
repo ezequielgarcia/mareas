@@ -6,6 +6,8 @@ Este es probablemente el resultado más bonito de toda la teoría de mareas, por
 conecta tres cosas que parecen no tener nada que ver: por qué los días se alargan,
 por qué la Luna se aleja, y por qué se disipa energía en el mar de Bering.
 
+![El bulto adelantado y el reparto de momento angular](img/02-retroceso-lunar.png)
+
 ---
 
 ## Cómo lo sabemos

@@ -52,6 +52,14 @@ m/s. Puntos anfidrómicos, resonancia de cuencas con la fórmula de Merian, los
 constituyentes de aguas someras que la gravedad no genera, cómo se predice la marea
 de verdad, y por qué la corriente máxima no coincide con la pleamar.
 
+### [07 — El Solent: el mejor caso de estudio del mundo](07-el-solent.md)
+
+Navegación práctica y física a la vez. La **doble pleamar** de Southampton y el
+álgebra de una línea que la explica: aparece en cuanto el armónico M4 supera un
+cuarto de M2. Por qué la Isla de Wight, con sus dos entradas, la produce; por qué
+eso convirtió Southampton en el puerto de los transatlánticos; las corrientes de
+4-5 nudos de Hurst Narrows; y por qué **la regla de los doceavos falla ahí**.
+
 ### [Bibliografía](bibliografia.md)
 
 Ordenada por dificultad, marcando lo que está disponible gratis. Incluye las fuentes
@@ -60,6 +68,19 @@ todo el proyecto: analizar un mareógrafo real con el código de este repositori
 
 ---
 
+## Las figuras
+
+Cada documento lleva una figura. Se regeneran todas con:
+
+```
+uv run python docs/generar_figuras.py
+```
+
+Las de los documentos 01 y 03 usan datos de la simulación de N-cuerpos del
+proyecto. Las demás son construcciones analíticas o datos de la literatura, y está
+indicado en el pie de cada una, para que nunca haya duda sobre qué es resultado
+propio y qué es contexto.
+
 ## Cómo se relaciona esto con el código
 
 | documento | programa |
@@ -67,10 +88,11 @@ todo el proyecto: analizar un mareógrafo real con el código de este repositori
 | 01 — dos bultos | `03_tidal_bulge.py`, `tide/potential.py` |
 | 04 — 1/d³ | `03_tidal_bulge.py` (razón Luna/Sol = 2.178) |
 | 01 — 12 h 25 min y sicigias | `04_tides.py` |
-| 06 — análisis armónico | `05_constituents.py`, `tide/harmonics.py` |
+| 06, 07 — análisis armónico | `05_constituents.py`, `tide/harmonics.py` |
 | 02, 03 — retroceso y acoplamiento | **nada** — hacen falta disipación y cuerpos extensos |
+| 07 — el armónico M4 | **nada** — lo genera el océano, no la gravedad |
 
-Los documentos 02 y 03 explican física que este código deliberadamente **no**
-modela: la simulación es conservativa y trata los cuerpos como masas puntuales. Eso
-está dicho explícitamente en cada uno, para que no queden dudas sobre qué es
-resultado de la simulación y qué es contexto.
+Los documentos 02, 03 y parte del 07 explican física que este código
+deliberadamente **no** modela: la simulación es conservativa, trata los cuerpos como
+masas puntuales y no tiene océano dinámico. Está dicho explícitamente en cada uno,
+para que no queden dudas sobre qué es resultado de la simulación y qué es contexto.
