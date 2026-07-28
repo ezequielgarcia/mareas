@@ -17,13 +17,17 @@ uv run pytest                    # 22 physics checks                    (~8 s)
 
 Figures land in `figures/`.
 
-**Prose documentation, in Spanish, in [`docs/`](docs/README.md)** — eight
+**Prose documentation, in Spanish, in [`docs/`](docs/README.md)** — nine
 illustrated essays on the physics behind the code: why there are two bulges and not
 one, whether the Moon really is receding, why we always see the same face, tides
 elsewhere in the solar system, why the Bay of Fundy has 16 m when this project
 computes 25 cm, the Solent's double high water, the virial theorem (and how it
-found dark matter), and an annotated bibliography.
-Regenerate its figures with `uv run python docs/generar_figuras.py`.
+found dark matter), how robust the Earth-Moon-Sun system is, and an annotated
+bibliography.
+
+Only the essays are in Spanish. All software — code, identifiers and comments — is
+in English; the sole exception is the figure labels, which are content for those
+essays. Regenerate every figure with `uv run python docs/make_figures.py`.
 
 ---
 
@@ -322,7 +326,7 @@ Genuinely accessible, roughly in order of how much they assume:
 01_two_body.py  …  05_constituents.py   the progression — start here
 calibrate.py                            solves for the epoch elements of §5
 docs/                                   illustrated essays, in Spanish
-docs/generar_figuras.py                 regenerates every docs figure
+docs/make_figures.py                 regenerates every docs figure
 tide/constants.py                       SI constants and orbital elements
 tide/initial_conditions.py              building the two- and three-body states
 tide/nbody.py                           gravity + velocity-Verlet integrator

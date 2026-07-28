@@ -70,6 +70,17 @@ es una **ley de promedios**: en el perigeo sale 1.86 y en el apogeo 2.10, nunca 
 Termina con cómo Zwicky convirtió velocidades en masa en 1933 y **descubrió así la
 materia oscura**, con el cálculo de Coma hecho en una servilleta.
 
+### [09 — ¿Cuán estable es el sistema Tierra-Luna-Sol?](09-estabilidad.md)
+
+Robusto sí, milagroso no. **Chicxulub es un millonésimo** de lo necesario para
+perturbar la órbita lunar: haría falta algo más grande que Ceres, o sea la misma
+clase de evento que creó el sistema. Pero atención al salto lógico — la robustez
+explica la **persistencia**, no la **formación**, y todo apunta a que esa fue un
+accidente: **nuestra Luna es, en proporción, 52 veces más grande que la de cualquier
+otro planeta**, y Venus no tiene ninguna. Termina con el giro: sin la Luna, la
+oblicuidad terrestre vagaría caóticamente, así que **la Luna es lo que hace estable
+el clima**. Con una integración de 1.500 años como prueba.
+
 ### [Bibliografía](bibliografia.md)
 
 Ordenada por dificultad, marcando lo que está disponible gratis. Incluye las fuentes
@@ -83,13 +94,16 @@ todo el proyecto: analizar un mareógrafo real con el código de este repositori
 Cada documento lleva una figura. Se regeneran todas con:
 
 ```
-uv run python docs/generar_figuras.py
+uv run python docs/make_figures.py
 ```
 
-Las de los documentos 01, 03 y 08 usan datos de la simulación de N-cuerpos del
+Las de los documentos 01, 03, 08 y 09 usan datos de la simulación de N-cuerpos del
 proyecto. Las demás son construcciones analíticas o datos de la literatura, y está
 indicado en el pie de cada una, para que nunca haya duda sobre qué es resultado
 propio y qué es contexto.
+
+El software está escrito en inglés, como el resto del proyecto; solo los rótulos de
+las figuras van en español, porque son contenido de estos documentos.
 
 ## Cómo se relaciona esto con el código
 
@@ -100,6 +114,7 @@ propio y qué es contexto.
 | 01 — 12 h 25 min y sicigias | `04_tides.py` |
 | 06, 07 — análisis armónico | `05_constituents.py`, `tide/harmonics.py` |
 | 08 — relación virial e identidad de Lagrange-Jacobi | `tide/nbody.py` — **sí sale**, verificada a 10⁻⁶ |
+| 09 — estabilidad acotada del sistema | `tide/orbits.py` — **sí sale**, 1.500 años integrados |
 | 02, 03 — retroceso y acoplamiento | **nada** — hacen falta disipación y cuerpos extensos |
 | 07 — el armónico M4 | **nada** — lo genera el océano, no la gravedad |
 
