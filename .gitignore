@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Generated output -- every figure is reproducible by running the programs
+figures/
+
+# uv.lock IS committed on purpose: it pins exact versions so the numbers in the
+# README are reproducible.

@@ -1,0 +1,22 @@
+[project]
+name = "tide"
+version = "0.1.0"
+description = "Ab initio tides: Sun-Earth-Moon gravity -> tidal constituents"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "matplotlib>=3.8",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+# Not an installable library -- just a directory of modules plus run.py.
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# The project is a directory of modules, not an installed package, so put the
+# repo root on sys.path for the test run.
+pythonpath = ["."]
