@@ -46,41 +46,120 @@ Cuatro métodos completamente distintos, misma conclusión.
 Aquí está el truco, y es puramente geométrico.
 
 Si la Tierra fuese un fluido sin rozamiento, el bulto de marea apuntaría
-exactamente hacia la Luna. Pero el océano tiene fricción, tarda en responder, y
-la Tierra gira mucho más rápido (24 h) que la Luna en su órbita (27.3 d). El
+exactamente hacia la Luna. Pero hay fricción, el agua tarda en responder, y la
+Tierra gira mucho más rápido (24 h) que la Luna en su órbita (27.3 d). El
 resultado es que **la rotación arrastra el bulto por delante de la línea
-Tierra-Luna**, unos pocos grados.
+Tierra-Luna**, unos pocos grados (el esquema de la figura de arriba lo exagera
+mucho para que se vea).
 
-```
-        bulto adelantado
-              ↓
-         ___
-       /     \
-      |   T   | ----→ giro de la Tierra
-       \ ___ /
-                            ● Luna
-```
+**Y el desfase es imprescindible.** Un bulto perfectamente apuntado a la Luna
+ejercería una fuerza puramente **radial** —hacia el centro, sin componente
+tangencial— y por tanto **par cero**: no frenaría nada. No basta con que el bulto
+exista. Todo el efecto viene de que está desalineado.
 
-Ese pequeño desfase lo cambia todo, porque ahora hay un par de fuerzas:
+Con el desfase sí hay un par de fuerzas:
 
 - **El bulto tira de la Luna hacia adelante.** La Luna gana momento angular.
 - **La Luna tira del bulto hacia atrás.** La Tierra pierde momento angular: se
   frena.
 
 El momento angular no se pierde, se *transfiere*: de la rotación de la Tierra a
-la órbita de la Luna. Lo que sí se pierde es energía, disipada en calor por la
-fricción.
+la órbita de la Luna.
+
+### Un matiz: hay DOS bultos, y tiran en sentidos opuestos
+
+Se suele contar como si solo existiera el bulto cercano, pero recuerda del
+[documento 01](01-por-que-hay-dos-mareas-al-dia.md) que hay dos:
+
+- el bulto **cercano** va adelantado y tira de la Luna **hacia adelante**;
+- el bulto **lejano** está adelantado por el otro lado y tira **hacia atrás**.
+
+Gana el cercano por una razón sencilla: **está más cerca de la Luna**, y la
+gravedad va como 1/d². El empujón neto hacia adelante es la *diferencia* entre dos
+efectos opuestos, no un único tirón.
+
+### Los océanos ayudan, pero NO son necesarios
+
+Es fácil leer "el océano tiene fricción" y concluir que sin océanos no habría
+frenado de marea. No es así: **la marea sólida también disipa**. La roca se
+deforma, tiene fricción interna, y eso frena igual.
+
+La prueba está en el [documento 03](03-por-que-vemos-siempre-la-misma-cara.md): la
+Luna **no tiene océanos** y quedó acoplada por marea de todas formas. Ío tampoco, y
+se funde.
+
+Lo que hacen los océanos es hacerlo **mucho más eficiente** en la Tierra actual.
+Pero el proceso lleva funcionando desde que se formó la Luna, hace ~4.500 millones
+de años, y al principio era muchísimo más intenso porque la Luna estaba mucho más
+cerca (y la marea va como 1/d³).
 
 ### El detalle que a todo el mundo le descoloca
 
 El bulto acelera a la Luna, la empuja hacia adelante en su órbita... y el
 resultado es que **la Luna se mueve más despacio**.
 
-No es contradicción. Al ganar energía la Luna sube a una órbita más alta, y por
-la tercera ley de Kepler una órbita más alta es una órbita más lenta. Acelerarla
-tangencialmente la promociona a un carril exterior donde tarda más en dar la
-vuelta. Es exactamente lo mismo que le pasa a una nave que enciende motores para
-subir de órbita.
+No es contradicción. Al ganar energía la Luna sube a una órbita más alta, y una
+órbita más alta es una órbita más lenta. Acelerarla tangencialmente la promociona a
+un carril exterior donde tarda más en dar la vuelta. Es exactamente lo mismo que le
+pasa a una nave que enciende motores para subir de órbita.
+
+La razón profunda de esto es el **teorema virial**, que amarra la cinética y la
+potencial de cualquier órbita: [08-el-teorema-virial.md](08-el-teorema-virial.md).
+La Luna se está frenando unos 5 micrómetros/s por siglo mientras gana energía.
+
+---
+
+## Dos contabilidades distintas: momento angular y energía
+
+Aquí está la confusión más común de todo este tema, y merece una tabla propia.
+**No son la misma cuenta.**
+
+- **Momento angular: se conserva.** Es una transferencia limpia de la rotación
+  terrestre a la órbita lunar.
+- **Energía: NO se conserva.** Se disipa. Y la mayor parte **no llega a la Luna**.
+
+Con las dos medidas independientes que tenemos —el día se alarga 2.3 ms/siglo y la
+Luna se aleja 3.8 cm/año— las cuentas salen así:
+
+### Momento angular (kg m²/s²)
+
+| | |
+|---|---|
+| la Tierra pierde | −4.9 × 10¹⁶ |
+| la Luna gana | +4.5 × 10¹⁶ |
+
+El **91%** llega a la Luna. El ~9% que falta se lo lleva la **marea solar**, que
+también frena la Tierra pero cuyo par no alimenta la órbita lunar, sino la de la
+Tierra alrededor del Sol. (Las cifras de entrada son aproximadas, así que ese
+reparto es coherente en orden de magnitud, no una medida de precisión.)
+
+### Energía (TW)
+
+| | |
+|---|---|
+| energía rotacional que pierde la Tierra | **−3.58** |
+| energía que gana la órbita lunar | **+0.12** |
+| **disipado en calor** | **3.46 — el 97%** |
+
+Solo un **3%** de lo que la Tierra pierde acaba en la órbita de la Luna. Todo lo
+demás se convierte en calor.
+
+Así que decir "se intercambia energía entre la Tierra y la Luna" **no es correcto**:
+la Tierra pierde energía, la Luna gana un poquito, y la diferencia calienta agua.
+
+### Y dentro de la órbita, cinética y potencial van en sentidos opuestos
+
+| | |
+|---|---|
+| energía **potencial** de la Luna | **+0.24 TW** (sube) |
+| energía **cinética** de la Luna | **−0.12 TW** (¡baja!) |
+| total orbital | +0.12 TW |
+
+La potencial sube exactamente el **doble** de lo que baja la cinética. Eso es el
+teorema virial otra vez: en una órbita `U = −2K`, así que al subir ganas potencial
+al doble del ritmo que pierdes cinética, y el balance neto es positivo.
+
+Ahí está, cuantificado, el "gana energía y va más despacio".
 
 ---
 

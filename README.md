@@ -17,11 +17,12 @@ uv run pytest                    # 22 physics checks                    (~8 s)
 
 Figures land in `figures/`.
 
-**Prose documentation, in Spanish, in [`docs/`](docs/README.md)** — seven
+**Prose documentation, in Spanish, in [`docs/`](docs/README.md)** — eight
 illustrated essays on the physics behind the code: why there are two bulges and not
 one, whether the Moon really is receding, why we always see the same face, tides
 elsewhere in the solar system, why the Bay of Fundy has 16 m when this project
-computes 25 cm, the Solent's double high water, and an annotated bibliography.
+computes 25 cm, the Solent's double high water, the virial theorem (and how it
+found dark matter), and an annotated bibliography.
 Regenerate its figures with `uv run python docs/generar_figuras.py`.
 
 ---

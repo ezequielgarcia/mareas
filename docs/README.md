@@ -60,6 +60,16 @@ cuarto de M2. Por qué la Isla de Wight, con sus dos entradas, la produce; por q
 eso convirtió Southampton en el puerto de los transatlánticos; las corrientes de
 4-5 nudos de Hurst Narrows; y por qué **la regla de los doceavos falla ahí**.
 
+### [08 — El teorema virial](08-el-teorema-virial.md)
+
+Por qué `2⟨K⟩ = −⟨U⟩`, y por qué eso hace que **añadir energía a una órbita la
+frene**. **No sale de la conservación de la energía** —sale de Newton II más que el
+sistema esté acotado— y el documento lo demuestra con la identidad de
+Lagrange-Jacobi, verificada a 10⁻⁶ con datos de nuestra simulación. Insiste en que
+es una **ley de promedios**: en el perigeo sale 1.86 y en el apogeo 2.10, nunca 2.
+Termina con cómo Zwicky convirtió velocidades en masa en 1933 y **descubrió así la
+materia oscura**, con el cálculo de Coma hecho en una servilleta.
+
 ### [Bibliografía](bibliografia.md)
 
 Ordenada por dificultad, marcando lo que está disponible gratis. Incluye las fuentes
@@ -76,7 +86,7 @@ Cada documento lleva una figura. Se regeneran todas con:
 uv run python docs/generar_figuras.py
 ```
 
-Las de los documentos 01 y 03 usan datos de la simulación de N-cuerpos del
+Las de los documentos 01, 03 y 08 usan datos de la simulación de N-cuerpos del
 proyecto. Las demás son construcciones analíticas o datos de la literatura, y está
 indicado en el pie de cada una, para que nunca haya duda sobre qué es resultado
 propio y qué es contexto.
@@ -89,6 +99,7 @@ propio y qué es contexto.
 | 04 — 1/d³ | `03_tidal_bulge.py` (razón Luna/Sol = 2.178) |
 | 01 — 12 h 25 min y sicigias | `04_tides.py` |
 | 06, 07 — análisis armónico | `05_constituents.py`, `tide/harmonics.py` |
+| 08 — relación virial e identidad de Lagrange-Jacobi | `tide/nbody.py` — **sí sale**, verificada a 10⁻⁶ |
 | 02, 03 — retroceso y acoplamiento | **nada** — hacen falta disipación y cuerpos extensos |
 | 07 — el armónico M4 | **nada** — lo genera el océano, no la gravedad |
 
@@ -96,3 +107,7 @@ Los documentos 02, 03 y parte del 07 explican física que este código
 deliberadamente **no** modela: la simulación es conservativa, trata los cuerpos como
 masas puntuales y no tiene océano dinámico. Está dicho explícitamente en cada uno,
 para que no queden dudas sobre qué es resultado de la simulación y qué es contexto.
+
+El 08 es el caso interesante: la **relación** virial sí está en la simulación, pero
+la **evolución secular** que produce no, porque necesita disipación. Tenemos los
+rieles, no el motor.

@@ -34,7 +34,7 @@ from tide.constants import (  # noqa: E402
 )
 from tide.initial_conditions import EARTH, MOON, three_body_state  # noqa: E402
 from tide.nbody import integrate  # noqa: E402
-from tide.orbits import osculating_elements  # noqa: E402
+from tide.orbits import mean_motion_period, osculating_elements  # noqa: E402
 
 IMG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "img")
 
@@ -511,6 +511,90 @@ def fig_solent():
     _guardar(fig, "07-solent.png")
 
 
+# ---------------------------------------------------------------- documento 08
+def fig_virial():
+    """El teorema virial: por qué subir de órbita frena, y que es un PROMEDIO.
+
+    Los paneles central y derecho usan la órbita Tierra-Luna de la simulación de
+    N-cuerpos del proyecto. El izquierdo es analítico.
+    """
+    mu = GM_EARTH + GM_MOON
+
+    pos0, vel0, gm = three_body_state()
+    dt = 300.0
+    t, pos, vel = integrate(pos0, vel0, gm, dt, int(3.0 * YEAR / dt),
+                            sample_every=2)
+    r = pos[:, MOON] - pos[:, EARTH]
+    v = vel[:, MOON] - vel[:, EARTH]
+    d = np.linalg.norm(r, axis=-1)
+    k = 0.5 * np.sum(v * v, axis=-1)
+    u = -mu / d
+
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 4.6))
+
+    # --- Panel 1: K, U, E en función del radio orbital (analítico) ---
+    a = np.linspace(0.45, 2.1, 400) * A_MOON
+    ax1.plot(a / A_MOON, mu / (2 * a) / 1e6, lw=2, color="tab:red",
+             label="cinética  $K = +\\mu/2a$")
+    ax1.plot(a / A_MOON, -mu / a / 1e6, lw=2, color="tab:blue",
+             label="potencial  $U = -\\mu/a$")
+    ax1.plot(a / A_MOON, -mu / (2 * a) / 1e6, lw=2.4, color="k",
+             label="total  $E = -\\mu/2a$")
+    ax1.axhline(0, color="dimgray", lw=0.6)
+    ax1.axvline(1.0, color="tab:green", lw=1.1, ls="--")
+    ax1.annotate("la Luna,\nhoy", xy=(1.0, -1.9), xytext=(1.25, -2.35),
+                 fontsize=8, color="tab:green",
+                 arrowprops=dict(arrowstyle="->", color="tab:green", lw=0.9))
+    ax1.annotate("", xy=(1.55, 0.34), xytext=(1.05, 0.51),
+                 arrowprops=dict(arrowstyle="-|>", color="tab:red", lw=1.8))
+    ax1.annotate("al subir de órbita\nla cinética BAJA", xy=(1.16, 0.62),
+                 fontsize=8, color="tab:red")
+    ax1.set(xlabel="radio orbital  $a$  (en unidades del actual)",
+            ylabel="energía específica (MJ/kg)", ylim=(-2.6, 1.5),
+            title="$U = -2K$  y  $E = -K$\nañadir energía a una órbita la FRENA")
+    ax1.legend(fontsize=8, loc="lower right")
+
+    # --- Panel 2: el cociente instantáneo NO vale 2 ---
+    P = mean_motion_period(t, r)
+    sel = t <= 3 * P
+    ax2.plot(t[sel] / DAY, (-u / k)[sel], lw=1.3, color="tab:purple")
+    ax2.axhline(2.0, color="k", lw=1.4, ls="--", label="lo que predice el virial")
+    for etiqueta, idx, color, dx, dy in (
+        ("perigeo: 1.86\n(más pequeño → $\\ddot I > 0$)",
+         d[sel].argmin(), "tab:red", 4.0, -0.005),
+        ("apogeo: 2.10\n(más grande → $\\ddot I < 0$)",
+         d[sel].argmax(), "tab:blue", 3.5, 0.012),
+    ):
+        ax2.plot(t[idx] / DAY, (-u / k)[idx], "o", color=color, ms=8, zorder=5)
+        ax2.annotate(etiqueta, xy=(t[idx] / DAY + dx, (-u / k)[idx] + dy),
+                     fontsize=8, color=color, va="center")
+    ax2.set(xlabel="tiempo (días)", ylabel="$-U/K$  instantáneo",
+            ylim=(1.80, 2.20),
+            title="Instante a instante NO se cumple\n(3 órbitas de la simulación)")
+    ax2.legend(fontsize=8, loc="lower right")
+
+    # --- Panel 3: el cociente DE LOS PROMEDIOS sí converge a 2 ---
+    # Ojo: es -<U>/<K>, el cociente de los promedios, no el promedio del cociente.
+    ratio_acumulado = -np.cumsum(u) / np.cumsum(k)
+    orbitas = t / P
+    desde = orbitas >= 0.35  # el transitorio inicial se sale de escala
+    ax3.plot(orbitas[desde], ratio_acumulado[desde], lw=1.6, color="tab:green")
+    ax3.axhline(2.0, color="k", lw=1.4, ls="--")
+    ax3.annotate("2 exacto: dos cuerpos aislados", xy=(20, 1.9955), fontsize=8)
+    ax3.annotate(f"converge a {ratio_acumulado[-1]:.4f}\n"
+                 "el 0.3% que sobra es ⟨f·r⟩,\nla perturbación del Sol",
+                 xy=(orbitas[-1], ratio_acumulado[-1]), xytext=(11, 2.022),
+                 fontsize=8, color="tab:green",
+                 arrowprops=dict(arrowstyle="->", color="tab:green", lw=0.9))
+    ax3.set(xlabel="órbitas completas promediadas",
+            ylabel="$-\\langle U\\rangle / \\langle K\\rangle$",
+            ylim=(1.985, 2.032), xlim=(0, 41),
+            title="Al promediar, sí\nEL VIRIAL ES UNA LEY DE PROMEDIOS")
+
+    fig.suptitle("Documento 08 — el teorema virial", fontsize=10, y=1.0)
+    _guardar(fig, "08-virial.png")
+
+
 if __name__ == "__main__":
     os.makedirs(IMG, exist_ok=True)
     print("Generando figuras de la documentación:")
@@ -521,3 +605,4 @@ if __name__ == "__main__":
     fig_sistema_solar()
     fig_equilibrio_vs_real()
     fig_solent()
+    fig_virial()
