@@ -10,3 +10,7 @@ figures/
 
 # uv.lock IS committed on purpose: it pins exact versions so the numbers in the
 # README are reproducible.
+
+# Generated slides -- rebuild with slides/make_slides.py
+slides/*.pdf
+slides/*-png/
