@@ -27,6 +27,7 @@ uv run python calibrate.py          # re-solve lunar epoch elements (setup step)
 uv run python docs/make_figures.py  # regenerate docs/img/*.png
 uv run python slides/make_slide_figures.py                 # slide figures -> slides/img/
 SOURCE_DATE_EPOCH=0 uv run python slides/make_slides.py slides/charla.md   # -> slides/charla.pdf
+uv run python slides/calc_plata.py  # numbers on the Rio de la Plata slides (~20 s)
 ./slopcheck.py [--list] [FILE...]   # prose linter (see below)
 ```
 
@@ -45,8 +46,8 @@ against known values; they are the documentation of the progression.
 - `docs/` — nine Spanish essays + `bibliografia.md`; `docs/README.md` maps each essay
   to the code that backs it (and says which ones the code deliberately does *not* model).
 - `slides/` — `make_slides.py` (Markdown → 16:9 PDF with matplotlib, 1920×1080 at 144 dpi,
-  syntax documented in `slides/README.md`), `make_slide_figures.py`, `charla.md` (the
-  talk, 18 slides), `syntax-demo.md`.
+  syntax documented in `slides/README.md`), `make_slide_figures.py`, `calc_plata.py`,
+  `charla.md` (the talk, 26 slides), `syntax-demo.md`.
 - `slopcheck.py` — scores prose (Markdown + Python docstrings/comments, EN and ES) for
   AI-slop tells; currently 0 hits on every rule. Run it after writing prose; a past
   commit existed solely to remove hits it flagged.
@@ -66,12 +67,36 @@ against known values; they are the documentation of the progression.
   creation date, so regenerating changes bytes unless `SOURCE_DATE_EPOCH=0` is set.
   Only regenerate/commit it when the slides actually change.
 
+## The deck (`slides/charla.md`)
+
+- Order: tide origin → Roche → forced wave equation (slides 9–11, 1D, no Coriolis) →
+  harmonics (12), main eight constituents (13), Río de la Plata (14–15) → Kelvin's
+  machine → paradigm slide → annex (potential derivation via Legendre, then the full
+  2D wave equation with Coriolis and the elimination of u, step by step).
+- The wave equation is driven by the **tide-generating potential V**: `u_t = -g η_x + V_x`,
+  source `-h V_xx`. Do not call `V/g` a "source" or say the sea is "forced by the
+  equilibrium tide": that is a reference height, the `c → ∞` limit, not a real surface.
+  The user corrected this explicitly.
+- Derivations the user supplied as reference were rewritten in undergrad notation
+  (full `\frac{\partial^2 \eta}{\partial t^2}`, `\nabla`, vector `\mathbf{u}`), and the
+  body stays short with the long derivation in the annex. Keep that split.
+- Río de la Plata numbers: equilibrium amplitudes come from the simulation
+  (`calc_plata.py`); observed M2 = 0.27 m, O1 = 0.15 m at Buenos Aires and L ≈ 320 km come
+  from Moreira & Simionato (2019). Mean depth is **not measured**, so the slide uses a
+  5–15 m range and says so. K1 and S2 observed values were only seen in an unverified
+  search summary and are deliberately not on the slides.
+- Slide math is matplotlib mathtext: `\dfrac`, `\frac`, `\nabla`, `\hat`, `\mathbf` work,
+  `\displaystyle` does not. Render with `--png` and look at the changed slides before
+  committing.
+- `slopcheck.py` currently reports 0 hits on `slides/charla.md`; keep it that way
+  (it flags phrases like "dos puntos" as counting frames).
+
 ## Physics gotchas (do not "simplify" these away)
 
 - Tides are the *differential* potential: subtract the monopole and the term linear in
   **r** (Legendre n=0 and n=1). Not a simplification, it is the physics.
-- Sign convention: `tide/potential.py` defines V with η = V/g, i.e. minus the usual
-  potential; force is +∇V. The slides' appendix declares this.
+- Sign convention: `tide/potential.py` defines V as minus the usual potential, so V > 0
+  is high water and the force is +∇V. The slides' annex declares this.
 - Lunar initial conditions use **osculating** elements from `calibrate.py`
   (`A_MOON_EPOCH`, `E_MOON_EPOCH`), not the tabulated mean ones (a 0.8% error in the
   month ruins M2/S2 separation). Re-run `calibrate.py` if integrator or setup changes.
