@@ -92,7 +92,7 @@ SIZES = {
 
 LINE_SPACING = 1.33  # multiple of the font size
 BLOCK_GAP = 0.030  # vertical gap between blocks, figure fractions
-CAPTION_H = 0.042  # room reserved under an image for its caption
+CAPTION_GAP = 0.014  # between an image and its caption
 MIN_IMG_H = 0.22  # an image never gets squeezed below this, text shrinks instead
 
 
@@ -327,6 +327,7 @@ class Painter:
         self.px_w = fig.get_figwidth() * fig.dpi
         self.px_h = fig.get_figheight() * fig.dpi
         self._cache = {}
+        self._vcache = {}
         self.too_wide = False  # set by wrap() when an unbreakable token overflows
 
     def font(self, style, size, family=None, weight=None):
@@ -355,6 +356,44 @@ class Painter:
             artist.remove()
             self._cache[key] = box.width / self.px_w
         return self._cache[key]
+
+    def measure_vertical(self, text, style, size, family=None, weight=None):
+        """Ascent and descent about the baseline, as fractions of page height.
+
+        A formula with a fraction and an exponent is two or three times taller
+        than a line of text at the same point size, so the line box has to be
+        measured, not assumed.
+        """
+        key = (text, style, round(size, 3), family, weight)
+        if key not in self._vcache:
+            kw = self.font(style, size, family, weight)
+            artist = self.fig.text(0, 0.5, text, va="baseline", **kw)
+            box = artist.get_window_extent(renderer=self.renderer)
+            artist.remove()
+            anchor = 0.5 * self.px_h
+            self._vcache[key] = ((box.y1 - anchor) / self.px_h,
+                                 (anchor - box.y0) / self.px_h)
+        return self._vcache[key]
+
+    def line_boxes(self, lines, size, family=None, weight=None):
+        """Per line, (height above the baseline, advance to the next line)."""
+        nominal = pt_to_frac_h(size)
+        boxes = []
+        for line in lines:
+            ascent = descent = 0.0
+            for word, style, _ in line:
+                a, d = self.measure_vertical(word, style, size, family, weight)
+                ascent, descent = max(ascent, a), max(descent, d)
+            top = max(ascent + 0.10 * nominal, 0.78 * nominal)
+            boxes.append((top, max(top + descent + 0.20 * nominal,
+                                   LINE_SPACING * nominal)))
+        return boxes
+
+    def line_width(self, line, size, family=None, weight=None):
+        if not line:
+            return 0.0
+        word, style, dx = line[-1]
+        return dx + self.measure(word, style, size, family, weight)
 
     def space(self, size, family=None, weight=None):
         a = self.measure("x x", "", size, family, weight)
@@ -401,16 +440,24 @@ class Painter:
             lines.append(line)
         return lines
 
-    def draw_lines(self, lines, x0, y_top, size, color, family=None, weight=None):
-        """Draw wrapped lines downward from `y_top`. Returns the height used."""
-        step = pt_to_frac_h(size) * LINE_SPACING
-        # Put the first baseline a bit below the top of the line box.
-        for i, line in enumerate(lines):
-            baseline = y_top - step * i - pt_to_frac_h(size) * 0.78
+    def draw_lines(self, lines, x0, y_top, size, color, family=None, weight=None,
+                   center_in=None):
+        """Draw wrapped lines downward from `y_top`. Returns the height used.
+
+        With `center_in` set to a width, each line is centred in a box of that
+        width starting at x0, which is what a figure caption wants.
+        """
+        boxes = self.line_boxes(lines, size, family, weight)
+        cursor = y_top
+        for line, (top, advance) in zip(lines, boxes):
+            baseline = cursor - top
+            shift = 0.0
+            if center_in is not None:
+                shift = (center_in - self.line_width(line, size, family, weight)) / 2
             for word, style, dx in line:
                 kw = self.font(style, size, family, weight)
                 self.fig.text(
-                    x0 + dx,
+                    x0 + shift + dx,
                     baseline,
                     word,
                     color=self.theme["accent"] if style == "code" else color,
@@ -418,10 +465,15 @@ class Painter:
                     ha="left",
                     **kw,
                 )
-        return step * len(lines)
+            cursor -= advance
+        return y_top - cursor
 
-    def height_of(self, lines, size):
-        return pt_to_frac_h(size) * LINE_SPACING * len(lines)
+    def height_of(self, lines, size, family=None, weight=None):
+        return sum(a for _, a in self.line_boxes(lines, size, family, weight))
+
+    def first_baseline_drop(self, lines, size, family=None, weight=None):
+        """How far below the block top the first baseline sits."""
+        return self.line_boxes(lines, size, family, weight)[0][0]
 
 
 # --------------------------------------------------------------------------
@@ -445,24 +497,35 @@ def place_image(fig, data, x, y, w, h, theme):
     return ax
 
 
-def draw_image_row(fig, theme, loaded, boxes, x, y_bottom, row_h, gap):
-    """Lay images out in a row, centred on a common middle, caption under each."""
-    for ((data, _), caption), (w, h) in zip(loaded, boxes):
+def caption_block(painter, caption, width):
+    """Wrap a caption to `width`. Returns (lines, height); ([], 0) if there is none."""
+    if not caption:
+        return [], 0.0
+    size = SIZES["caption"]
+    lines = painter.wrap([(caption, "i")], width, size)
+    return lines, painter.height_of(lines, size) + CAPTION_GAP
+
+
+def columns_of(n, x0, total_w, gap):
+    """Split a width into n equal columns, as (left edge, width) pairs."""
+    width = (total_w - gap * (n - 1)) / n
+    return [(x0 + i * (width + gap), width) for i in range(n)]
+
+
+def draw_image_row(painter, theme, loaded, boxes, captions, columns, y_bottom, row_h):
+    """One image per column, centred in it, with its caption centred underneath.
+
+    Giving every image its own column is what keeps two captions from landing on
+    top of each other: a caption is wrapped and centred in the column, never in
+    the image, which may be much narrower than its column.
+    """
+    for ((data, _), _), (w, h), (lines, _), (x, col_w) in zip(
+            loaded, boxes, captions, columns):
         y = y_bottom + (row_h - h) / 2
-        place_image(fig, data, x, y, w, h, theme)
-        if caption:
-            fig.text(
-                x + w / 2,
-                y - CAPTION_H * 0.28,
-                caption,
-                fontsize=SIZES["caption"],
-                fontfamily=FONT_BODY,
-                fontstyle="italic",
-                color=theme["muted"],
-                va="top",
-                ha="center",
-            )
-        x += w + gap
+        place_image(painter.fig, data, x + (col_w - w) / 2, y, w, h, theme)
+        if lines:
+            painter.draw_lines(lines, x, y - CAPTION_GAP, SIZES["caption"],
+                               theme["muted"], center_in=col_w)
 
 
 def fit_box(aspect, max_w, max_h):
@@ -529,7 +592,8 @@ def render_title_slide(painter, theme, blocks, meta):
         lines = painter.wrap(block["spans"], content_w * 0.86, size, weight=400)
         pieces.append((lines, size, theme["body"], FONT_BODY, 400, 0.030))
 
-    total_h = sum(painter.height_of(l, s) + gap for l, s, _, _, _, gap in pieces)
+    total_h = sum(painter.height_of(l, s, f, w) + gap
+                  for l, s, _, f, w, gap in pieces)
     meta_line = " · ".join(v for v in (meta.get("author"), meta.get("date")) if v)
     if meta_line:
         total_h += 0.055 + pt_to_frac_h(SIZES["deck_meta"]) * LINE_SPACING
@@ -596,7 +660,8 @@ def render_section_slide(painter, theme, blocks):
             pieces.append(
                 (painter.wrap(block["spans"], content_w * 0.8, size), size, theme["body"], FONT_BODY, 400)
             )
-    total_h = sum(painter.height_of(l, s) for l, s, _, _, _ in pieces) + 0.030 * (len(pieces) - 1)
+    total_h = sum(painter.height_of(l, s, f, w) for l, s, _, f, w in pieces) + 0.030 * (
+        len(pieces) - 1)
     y = 0.5 + total_h / 2
     for lines, size, color, family, weight in pieces:
         y -= painter.draw_lines(lines, MARGIN_L + 0.012, y, size, color, family, weight) + 0.030
@@ -609,16 +674,16 @@ def render_full_slide(painter, theme, blocks, base_dir):
     loaded = [(load_image(it["src"], base_dir), it["caption"]) for it in items]
     n = len(loaded)
     gap = 0.025
-    cap = CAPTION_H if any(c for _, c in loaded) else 0.0
-    avail_w = (1 - MARGIN_L - MARGIN_R - gap * (n - 1)) / n
+    columns = columns_of(n, MARGIN_L, 1 - MARGIN_L - MARGIN_R, gap)
+    col_w = columns[0][1]
+    captions = [caption_block(painter, c, col_w) for _, c in loaded]
+    cap = max((h for _, h in captions), default=0.0)
     avail_h = 1 - MARGIN_T * 0.55 - MARGIN_B - cap
 
-    boxes = [fit_box(aspect, avail_w, avail_h) for (_, aspect), _ in loaded]
+    boxes = [fit_box(aspect, col_w, avail_h) for (_, aspect), _ in loaded]
     row_h = max(h for _, h in boxes)
-    total_w = sum(w for w, _ in boxes) + gap * (n - 1)
-    x = (1 - total_w) / 2
     y_bottom = MARGIN_B + cap + (avail_h - row_h) / 2
-    draw_image_row(fig, theme, loaded, boxes, x, y_bottom, row_h, gap)
+    draw_image_row(painter, theme, loaded, boxes, captions, columns, y_bottom, row_h)
 
 
 def layout_content(painter, theme, blocks, base_dir, scale):
@@ -638,7 +703,7 @@ def layout_content(painter, theme, blocks, base_dir, scale):
         if kind == "h1":
             size = SIZES["title"] * scale
             lines = painter.wrap(block["spans"], content_w, size, FONT_TITLE, 600)
-            h = painter.height_of(lines, size) + 0.034
+            h = painter.height_of(lines, size, FONT_TITLE, 600) + 0.034
             plan.append({"kind": "title", "lines": lines, "size": size, "h": h, "gap": 0.0})
             total += h
             continue
@@ -646,7 +711,7 @@ def layout_content(painter, theme, blocks, base_dir, scale):
         if kind == "h2":
             size = SIZES["kicker"] * scale
             lines = painter.wrap(block["spans"], content_w, size, FONT_BODY, 500)
-            h = painter.height_of(lines, size)
+            h = painter.height_of(lines, size, FONT_BODY, 500)
             plan.append(
                 {
                     "kind": "text",
@@ -666,7 +731,7 @@ def layout_content(painter, theme, blocks, base_dir, scale):
         if kind == "h3":
             size = SIZES["h3"] * scale
             lines = painter.wrap(block["spans"], content_w, size, FONT_BODY, 600)
-            h = painter.height_of(lines, size)
+            h = painter.height_of(lines, size, FONT_BODY, 600)
             plan.append(
                 {
                     "kind": "text",
@@ -733,7 +798,7 @@ def layout_content(painter, theme, blocks, base_dir, scale):
             size = SIZES["quote"] * scale
             x = MARGIN_L + 0.030
             lines = painter.wrap(block["spans"], 1 - MARGIN_R - x - 0.04, size, FONT_BODY, 400)
-            h = painter.height_of(lines, size)
+            h = painter.height_of(lines, size, FONT_BODY, 400)
             plan.append({"kind": "quote", "lines": lines, "size": size, "x": x, "h": h, "gap": gap})
             total += h + gap
             continue
@@ -778,13 +843,16 @@ def draw_content(painter, theme, plan, total_h, base_dir):
         for entry in image_entries:
             n = len(entry["loaded"])
             gap = 0.022
-            box_w = (content_w - gap * (n - 1)) / n
-            cap = CAPTION_H if any(c for _, c in entry["loaded"]) else 0.0
+            columns = columns_of(n, MARGIN_L, content_w, gap)
+            box_w = columns[0][1]
+            captions = [caption_block(painter, c, box_w) for _, c in entry["loaded"]]
+            cap = max((h for _, h in captions), default=0.0)
             box_h = max(MIN_IMG_H + share - cap, 0.08)
             boxes = [fit_box(aspect, box_w, box_h) for (_, aspect), _ in entry["loaded"]]
             entry["boxes"] = boxes
-            entry["gap_x"] = gap
+            entry["columns"] = columns
             entry["cap"] = cap
+            entry["captions"] = captions
             entry["h"] = max(h for _, h in boxes) + cap
         total_h = sum(p["h"] + p["gap"] for p in plan)
 
@@ -831,7 +899,7 @@ def draw_content(painter, theme, plan, total_h, base_dir):
 
         if kind == "bullet":
             size = entry["size"]
-            baseline = y - pt_to_frac_h(size) * 0.78
+            baseline = y - painter.first_baseline_drop(entry["lines"], size)
             if entry["marker"]:
                 fig.text(
                     entry["mx"],
@@ -920,12 +988,10 @@ def draw_content(painter, theme, plan, total_h, base_dir):
 
         if kind == "images":
             boxes = entry["boxes"]
-            gap = entry["gap_x"]
             row_h = max(h for _, h in boxes)
-            total_w = sum(w for w, _ in boxes) + gap * (len(boxes) - 1)
-            x = (1 - total_w) / 2
             img_bottom = y - entry["h"] + entry["cap"]
-            draw_image_row(fig, theme, entry["loaded"], boxes, x, img_bottom, row_h, gap)
+            draw_image_row(painter, theme, entry["loaded"], boxes, entry["captions"],
+                           entry["columns"], img_bottom, row_h)
             y -= entry["h"]
             continue
 
