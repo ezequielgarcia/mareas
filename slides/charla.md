@@ -96,15 +96,45 @@ Con $M = \frac{4}{3}\pi R^3 \rho_M$ y $m = \frac{4}{3}\pi r^3 \rho_m$, el radio 
 
 # La marea es una onda forzada (Laplace, 1776)
 
-- Newton pedía que el bulto **siguiera** a la Luna: 40.000 km en un día lunar son **450 m/s** en el ecuador. Una onda larga en 4 km de océano va a $c = \sqrt{gh} \approx 200$ m/s. **No llega ni a la mitad.**
+## Aguas someras: un canal de profundidad $h$
 
-### $\partial_t \zeta + h\, \partial_x u = 0$    y    $\partial_t u = -g\, \partial_x \zeta + \partial_x V$
+- La onda de marea mide miles de kilómetros de largo y el océano 4 km de hondo. Con esa desproporción la velocidad $u$ es la misma a toda profundidad y la presión es hidrostática.
+- $\zeta(x,t)$ es la superficie medida desde el reposo; $u(x,t)$, la velocidad de la columna.
+- **Masa.** La columna mide $h + \zeta$. Lo que entra menos lo que sale cambia su altura:
 
-Derivando la continuidad y sustituyendo el momento:
+### $\partial_t \zeta + \partial_x \left[(h+\zeta)\,u\right] = 0$
 
-### $\frac{\partial^2 \zeta}{\partial t^2} - gh\, \frac{\partial^2 \zeta}{\partial x^2} = -h\, \frac{\partial^2 V}{\partial x^2} = -gh\, \frac{\partial^2 \zeta_{eq}}{\partial x^2}$
+- Y como $\zeta \ll h$ —centímetros contra kilómetros— el producto $\zeta u$ se va:
 
-- A la izquierda, una onda libre a $\sqrt{gh}$. A la derecha, el **forzamiento**: el mismo $V$ de la lámina 3, o su marea de equilibrio $\zeta_{eq} = V/g$. El océano es un **oscilador forzado**, no un bulto que sigue a la Luna.
+### $\partial_t \zeta + h\, \partial_x u = 0$
+
+---
+
+# El momento, y por dónde entra la marea
+
+- La presión es hidrostática, $p = \rho g(\zeta - z)$, así que su gradiente horizontal por unidad de masa es $-g\,\partial_x \zeta$: el agua cae hacia donde la superficie está más baja.
+- La marea añade su fuerza por unidad de masa, que con el convenio $\eta = V/g$ de la lámina 3 es $+\partial_x V$.
+
+### $\partial_t u + u\, \partial_x u = -g\, \partial_x \zeta + \partial_x V$
+
+- El término $u\,\partial_x u$ se va también: la corriente de marea es de ~1 m/s y la onda viaja a ~200 m/s.
+
+### $\partial_t u = -g\, \partial_x \zeta + \partial_x V$
+
+---
+
+# Eliminar $u$: la ecuación de onda forzada
+
+- Derivo la continuidad respecto del tiempo:   $\partial_t^2 \zeta + h\, \partial_x (\partial_t u) = 0$
+- Y meto dentro el momento, que es justo $\partial_t u$:
+
+### $\partial_t^2 \zeta + h\, \partial_x \left( -g\, \partial_x \zeta + \partial_x V \right) = 0$
+
+### $\partial_t^2 \zeta - gh\, \partial_x^2 \zeta = -h\, \partial_x^2 V$
+
+- A la izquierda, la onda libre, que viaja a $c = \sqrt{gh}$: **200 m/s** en 4 km de océano. A la derecha, el **forzamiento**.
+- Con la marea de equilibrio $\zeta_{eq} = V/g$ el forzamiento es $-c^2\, \partial_x^2 \zeta_{eq}$: al mar no lo fuerza la marea de equilibrio, sino su **curvatura**.
+- Si $c$ fuese infinita saldría $\zeta = \zeta_{eq}$, que es la teoría de Newton. Es finita, y de ahí que la marea real vaya desfasada y pueda entrar en resonancia.
 
 ---
 
@@ -142,13 +172,11 @@ Derivando la continuidad y sustituyendo el momento:
 
 # Anexo
 
-## A · el potencial, término a término
-
-## B · el virial y el límite de Roche
+## El potencial generador de marea, término a término
 
 ---
 
-# Anexo A · Geometría y el potencial exacto
+# Anexo · Geometría y el potencial exacto
 
 - La Luna en $\mathbf{d}$, la estación en $\mathbf{r}$, las dos desde el centro de la Tierra, y $\psi$ el ángulo entre ellas: $|\mathbf{d}-\mathbf{r}| = \sqrt{d^2 - 2dr\cos\psi + r^2}$
 - Potencial de la Luna en la estación: $\Phi = -GM/|\mathbf{d}-\mathbf{r}|$
@@ -160,7 +188,7 @@ Derivando la continuidad y sustituyendo el momento:
 
 ---
 
-# Anexo A · El desarrollo de Legendre
+# Anexo · El desarrollo de Legendre
 
 ### $\frac{1}{|\mathbf{d}-\mathbf{r}|} = \frac{1}{d} \sum_{n=0}^{\infty} \left( \frac{r}{d} \right)^n P_n(\cos\psi)$     para $r < d$
 
@@ -171,42 +199,10 @@ Derivando la continuidad y sustituyendo el momento:
 
 ---
 
-# Anexo A · El cuadrupolo, y qué se desprecia
+# Anexo · El cuadrupolo, y qué se desprecia
 
 ### $V = \frac{GM}{d} \sum_{n \geq 2} \left( \frac{r}{d} \right)^n P_n(\cos\psi)$
 
 - El primer superviviente es $n=2$:   $V_2 = \frac{GM r^2}{d^3} P_2(\cos\psi) = \frac{GM r^2}{2d^3}(3\cos^2\psi - 1)$
 - El siguiente es menor en un factor $r/d$. Para la Luna, $R_\oplus/d \approx 1/60$, o sea un 1,7%; el proyecto compara el exacto contra el cuadrupolo y mide **1,8%**.
 - $P_2$ es **par** en $\cos\psi$: de ahí los dos bultos. Y es un armónico esférico de grado 2, de ahí que M2 vaya como $\cos^2\varphi$ y K1 como $|\sin 2\varphi|$.
-
----
-
-# Anexo B · El virial escalar no basta
-
-- Virial para un cuerpo fluido en equilibrio, sin movimiento interno: $3\int\! P\,dV + U_{propia} + W_{marea} = 0$
-- Esfera homogénea de masa $m$ y radio $r$:   $U_{propia} = -\frac{3}{5}\frac{Gm^2}{r}$   y   $W_{marea} = -\frac{1}{5} n^2 m r^2$,   con $n^2 = GM/d^3$
-- Los **dos** son negativos, así que la suma nunca da un criterio de ruptura. El virial escalar no ve que la marea estira en $x$ y comprime en $z$: promedia las direcciones.
-- Hacen falta las ecuaciones viriales **tensoriales**, y dejar que el cuerpo **se deforme**. Y eso da el coeficiente fluido, no el rígido.
-
----
-
-# Anexo B · Potencial de Hill y elipsoide homogéneo
-
-- Marea más centrífuga en el marco corrotante, a segundo orden, con $n^2 = GM/d^3$:
-
-### $\Phi_t = -V_2 + \Phi_{centr} = -\frac{1}{2} n^2 (3x^2 - z^2)$
-
-- Elipsoide homogéneo de semiejes $a_1, a_2, a_3$:   $\Phi_{propia} = -\pi G\rho \left( A_0 - \sum_i A_i x_i^2 \right)$,   con $A_i = a_1 a_2 a_3 \int_0^\infty \frac{du}{(a_i^2+u)\Delta(u)}$ y $\sum_i A_i = 2$
-- Equilibrio hidrostático: la superficie tiene que ser equipotencial, así que las tres formas cuadráticas son proporcionales. Con $\nu = n^2/\pi G\rho$:
-
-### $a_1^2 \left( A_1 - \frac{3}{2}\nu \right) = a_2^2 A_2 = a_3^2 \left( A_3 + \frac{1}{2}\nu \right)$
-
----
-
-# Anexo B · Dónde se acaba la secuencia
-
-![](img/s19-roche-virial.png)
-
-- Dos ecuaciones y dos cocientes de ejes: para cada $\nu$ hay un elipsoide de equilibrio, hasta que deja de haberlo. El máximo está en $\nu = 0{,}09009$, con $a_2/a_1 = 0{,}511$ y $a_3/a_1 = 0{,}483$.
-- Como $\nu = \frac{4}{3}\frac{R^3}{d^3}\frac{\rho_M}{\rho_m}$, eso es $d = \left(\frac{4}{3\nu}\right)^{1/3} R \left(\frac{\rho_M}{\rho_m}\right)^{1/3} = \mathbf{2{,}455}\, R \left(\frac{\rho_M}{\rho_m}\right)^{1/3}$
-- Ése es el 2,44 de la lámina 7 y de `docs/05`, calculado en vez de citado. Dejar que el cuerpo se deforme casi **duplica** el límite rígido de 1,26.

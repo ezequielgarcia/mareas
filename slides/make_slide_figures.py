@@ -311,101 +311,6 @@ def fig_synthesis():
     _save(fig, "s10-sintesis.png")
 
 
-# --- Roche ellipsoids, for the virial annex -------------------------------
-# The index symbols of a homogeneous ellipsoid,
-#     A_i = a1 a2 a3 int_0^inf du / [ (a_i^2 + u) Delta(u) ],
-#     Delta(u) = sqrt((a1^2+u)(a2^2+u)(a3^2+u)),
-# mapped onto (0, 1) by u = 1/t - 1 and integrated with Gauss-Legendre.
-_NODES, _WEIGHTS = np.polynomial.legendre.leggauss(240)
-_T = 0.5 * (_NODES + 1.0)
-_W = 0.5 * _WEIGHTS
-
-
-def index_symbols(axes):
-    """A_1, A_2, A_3 for semi-axes `axes`. They satisfy A_1 + A_2 + A_3 = 2."""
-    a = np.asarray(axes, float)
-    u = 1.0 / _T - 1.0
-    jacobian = 1.0 / _T**2
-    delta = np.sqrt(np.prod(a[:, None] ** 2 + u[None, :], axis=0))
-    return np.array([np.prod(a) * np.sum(_W * jacobian / ((ai**2 + u) * delta))
-                     for ai in a])
-
-
-def roche_nu(alpha, beta):
-    """nu = n^2 / (pi G rho) from each of the two equilibrium conditions.
-
-    Hydrostatic equilibrium in the Hill potential forces the three quantities
-        a1^2 (A1 - 3nu/2),  a2^2 A2,  a3^2 (A3 + nu/2)
-    to be equal. Reading nu off the first pair and off the second pair gives two
-    values; they agree only on the equilibrium sequence.
-    """
-    a1 = (alpha * beta) ** (-1.0 / 3.0)  # volume a1 a2 a3 = 1
-    A1, A2, A3 = index_symbols([a1, a1 * alpha, a1 * beta])
-    return ((2.0 / 3.0) * (A1 - alpha**2 * A2),
-            2.0 * (alpha**2 * A2 - beta**2 * A3) / beta**2)
-
-
-def roche_sequence(alphas):
-    """Walk the equilibrium sequence: for each a2/a1, the a3/a1 that closes it."""
-    out = []
-    for alpha in alphas:
-        lo, hi = 1e-4, alpha - 1e-7
-        first = np.subtract(*roche_nu(alpha, lo))
-        for _ in range(90):
-            mid = 0.5 * (lo + hi)
-            if np.subtract(*roche_nu(alpha, mid)) * first > 0:
-                lo = mid
-            else:
-                hi = mid
-        beta = 0.5 * (lo + hi)
-        out.append((alpha, beta, roche_nu(alpha, beta)[0]))
-    return np.array(out)
-
-
-def fig_roche_sequence():
-    """Where the sequence of Roche ellipsoids ends -- the fluid Roche limit.
-
-    nu = n^2/(pi G rho) converts to distance with nu = (4/3)(R/d)^3 rho_M/rho_m,
-    so the vertical axis is d in units of R (rho_M/rho_m)^(1/3): the Roche
-    coefficient itself. The sequence has a minimum, and that minimum is the
-    limit. Nothing here is fitted or looked up.
-    """
-    seq = roche_sequence(np.linspace(0.34, 0.72, 200))
-    coefficient = (4.0 / (3.0 * seq[:, 2])) ** (1.0 / 3.0)
-    i = int(np.argmin(coefficient))
-    # Parabola through the minimum and its neighbours, for a sharper value.
-    fit = np.polyfit(seq[i - 1:i + 2, 0], coefficient[i - 1:i + 2], 2)
-    alpha_c = -fit[1] / (2 * fit[0])
-    c_min = np.polyval(fit, alpha_c)
-    beta_c = roche_sequence([alpha_c])[0, 1]
-
-    # Zoomed on the turning point: that is where the whole result lives. The
-    # rigid 1.26 is two thirds of a unit below and would flatten the curve to a
-    # line, so it is left to the slide text.
-    fig, ax = plt.subplots(figsize=(10.6, 3.3))
-    ax.axhspan(2.30, c_min, color=ACCENT2, alpha=0.08, zorder=0)
-    ax.plot(seq[:, 0], coefficient, lw=3.0, color=ACCENT)
-    ax.plot(alpha_c, c_min, "o", color=ACCENT2, ms=13, zorder=4)
-    label = ("límite de Roche fluido:   $d = "
-             + f"{c_min:.3f}".replace(".", ",")
-             + r"\,R\,(\rho_M/\rho_m)^{1/3}$")
-    ax.annotate(label, xy=(alpha_c, c_min + 0.008),
-                xytext=(0.355, 2.715),
-                fontsize=17, color=ACCENT2, fontweight=600, ha="left", va="bottom",
-                arrowprops=dict(arrowstyle="->", color=ACCENT2, lw=1.8,
-                                connectionstyle="arc3,rad=-0.18"))
-    ax.text(0.715, c_min - 0.022, "sin equilibrio: la marea lo desarma",
-            fontsize=16, color=ACCENT2, ha="right", va="top")
-    ax.set(xlim=(0.335, 0.725), ylim=(2.33, 2.80),
-           xticks=[0.4, 0.5, 0.6, 0.7],
-           yticks=[2.4, 2.5, 2.6, 2.7, 2.8],
-           xlabel=r"achatamiento del elipsoide   $a_2/a_1$",
-           ylabel=r"$d \,/\, R(\rho_M/\rho_m)^{1/3}$")
-    ax.spines[["top", "right"]].set_visible(False)
-    _save(fig, "s19-roche-virial.png")
-    print(f"       nu_max = {4 / (3 * c_min**3):.6f}  ->  C = {c_min:.4f} "
-          f"en a2/a1 = {alpha_c:.3f}, a3/a1 = {beta_c:.3f}")
-
 
 def main():
     os.makedirs(IMG, exist_ok=True)
@@ -414,7 +319,6 @@ def main():
     fig_recession()
     fig_roche()
     fig_synthesis()
-    fig_roche_sequence()
 
 
 if __name__ == "__main__":
