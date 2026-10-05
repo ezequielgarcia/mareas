@@ -95,72 +95,37 @@ Con $M = \frac{4}{3}\pi R^3 \rho_M$ y $m = \frac{4}{3}\pi r^3 \rho_m$, el radio 
 
 # La marea es una onda forzada (Laplace, 1776)
 
-## Aguas someras: una capa delgada de profundidad $h$
+## Aguas someras: un canal de profundidad $h$
 
 - La onda de marea mide miles de kilómetros de largo y el océano 4 km de hondo. Con esa desproporción las aceleraciones verticales no cuentan, y el agua se mueve en bloque: la velocidad es la misma a toda profundidad.
-- Las incógnitas, en el plano horizontal $(x, y)$:
-  - $\eta(x,y,t)$: la elevación de la superficie sobre el nivel de reposo
-  - $\mathbf{u}(x,y,t) = (u, v)$: la velocidad horizontal del agua
-- Lo que sabemos: $g$, la profundidad $h$, y el potencial generador $V(x,y,t)$ de la lámina 3, con el convenio $\eta_{eq} = V/g$ para la marea de equilibrio.
-
+- Las incógnitas, a lo largo del canal $x$:
+  - $\eta(x,t)$: la elevación de la superficie sobre el nivel de reposo
+  - $u(x,t)$: la velocidad del agua
+- La marea de equilibrio es $\eta_{eq} = V/g$, con el potencial generador $V$ de la lámina 3. Es lo que haría el mar si pudiera seguir a la Luna al instante.
 ---
 
 # Las dos ecuaciones
 
-### Movimiento (Newton):   $\dfrac{\partial \mathbf{u}}{\partial t} + f\,\hat{\mathbf{k}} \times \mathbf{u} = -g\,\nabla \left( \eta - \dfrac{V}{g} \right)$
+### Movimiento:   $\dfrac{\partial u}{\partial t} = -g\,\dfrac{\partial}{\partial x}\left( \eta - \eta_{eq} \right)$
 
-- El agua acelera por el gradiente de presión, que viene de $\eta$, y por la marea de equilibrio $V/g$. Con $\eta = \eta_{eq}$ el paréntesis se anula y no hay fuerza neta: el equilibrio de Newton.
-- $f = 2\Omega \sin\varphi$ es el término de Coriolis. Sin fricción, y sin los términos no lineales: la corriente de marea es de ~1 m/s y la onda viaja a ~200 m/s.
+- Newton: el agua acelera hacia donde la superficie está más baja que la de equilibrio. Si $\eta = \eta_{eq}$ no hay fuerza.
 
-### Continuidad (masa):   $\dfrac{\partial \eta}{\partial t} + \nabla \cdot (h\,\mathbf{u}) = 0$
+### Continuidad:   $\dfrac{\partial \eta}{\partial t} + h\,\dfrac{\partial u}{\partial x} = 0$
 
-- La superficie sube donde el flujo converge. Con $\eta \ll h$ —centímetros contra kilómetros— se usa $h$ y no $h + \eta$.
-
----
-
-# Eliminar $\mathbf{u}$
-
-- Para ver la estructura de la onda tomo $h$ constante y $f \approx 0$. Desaparece Coriolis, y con él los puntos anfidrómicos, que son un efecto de la rotación.
-
-### Paso 1. Abro el gradiente en el movimiento
-
-### $\dfrac{\partial \mathbf{u}}{\partial t} = -g\,\nabla \eta + \nabla V$
-
-- $\nabla V$ es una fuerza externa por unidad de masa, aplicada al agua directamente.
-
-### Paso 2. Divergencia de los dos lados
-
-### $\dfrac{\partial}{\partial t}\left( \nabla \cdot \mathbf{u} \right) = -g\,\nabla^2 \eta + \nabla^2 V$
-
-- Las derivadas en $t$ y en el espacio conmutan, y $\nabla^2 = \partial_x^2 + \partial_y^2$.
-
----
-
-# Sustituir la continuidad
-
-### Paso 3. Derivo la continuidad respecto de $t$
-
-### $\dfrac{\partial^2 \eta}{\partial t^2} + h\,\dfrac{\partial}{\partial t}\left( \nabla \cdot \mathbf{u} \right) = 0$
-
-- Y ahí aparece la misma cantidad que en el paso 2.
-
-### Paso 4. Igualo las dos expresiones de $\partial_t (\nabla \cdot \mathbf{u})$
-
-### $-\dfrac{1}{h}\,\dfrac{\partial^2 \eta}{\partial t^2} = -g\,\nabla^2 \eta + \nabla^2 V$
-
-- Multiplico por $-h$ y paso el término de $\eta$ a la izquierda.
-
+- Conservación de masa: la superficie sube donde el flujo converge.
+- Lineal, sin fricción y sin Coriolis. La corriente de marea es de ~1 m/s y la onda viaja a ~200 m/s, así que los términos no lineales no cuentan. Y $\eta \ll h$: centímetros contra kilómetros.
 ---
 
 # La ecuación de onda forzada
 
-### $\dfrac{\partial^2 \eta}{\partial t^2} - c^2\,\nabla^2 \eta = -h\,\nabla^2 V$      con  $c = \sqrt{gh}$
+Derivo la continuidad respecto de $t$ y meto el movimiento, que da $\partial_t u$:
 
-- **Izquierda**: la onda libre de d'Alembert. La inercia del agua ($\partial_t^2 \eta$) contra la gravedad que la restituye ($g\nabla^2 \eta$). Viaja a $c = $ **200 m/s** en 4 km de océano.
-- **Derecha**: el forzamiento. Como $V = g\,\eta_{eq}$, vale $-c^2\,\nabla^2 \eta_{eq}$: al mar no lo fuerza la marea de equilibrio, sino su **curvatura**.
-- $V$ es cuadrupolar y la Tierra gira debajo de la Luna, así que el forzamiento es periódico en M2, S2, K1, y las demás frecuencias astronómicas.
+### $\dfrac{\partial^2 \eta}{\partial t^2} = c^2\,\dfrac{\partial^2}{\partial x^2}\left( \eta - \eta_{eq} \right)$      con  $c = \sqrt{gh}$
+
+- Es la ecuación de onda de siempre, de las ondas largas en aguas someras, con $c = $ **200 m/s** en 4 km de océano. La marea de equilibrio entra como fuente.
+- Lo mismo, con la fuente a la derecha: $\partial_t^2 \eta - c^2\,\partial_x^2 \eta = -c^2\,\partial_x^2 \eta_{eq}$. Al mar no lo fuerza la marea de equilibrio, sino su **curvatura**.
 - Si $c$ fuese infinita saldría $\eta = \eta_{eq}$, que es la teoría de Newton. Es finita, y de ahí que la marea real vaya desfasada y pueda entrar en resonancia.
-- Falta fijar la costa: ahí $\mathbf{u} \cdot \hat{\mathbf{n}} = 0$. De esa condición y de la forma de la cuenca sale la amplitud.
+- Con Coriolis y en 2D, y los pasos uno por uno, en el anexo.
 ---
 
 # Los componentes armónicos: Kelvin, 1867
@@ -197,7 +162,7 @@ Con $M = \frac{4}{3}\pi R^3 \rho_M$ y $m = \frac{4}{3}\pi r^3 \rho_m$, el radio 
 
 # Anexo
 
-## El potencial generador de marea, término a término
+## El potencial generador de marea y la ecuación de onda, paso a paso
 
 ---
 
@@ -261,3 +226,51 @@ Con $M = \frac{4}{3}\pi R^3 \rho_M$ y $m = \frac{4}{3}\pi r^3 \rho_m$, el radio 
 - **Cuadraturas**: vale $0$ en $\psi \approx 54{,}7°$ y $125{,}3°$. A $\psi = 90°$ vale $-1$: bajamar.
 - **El cubo**: el potencial de marea va como $1/d^3$, mientras que la atracción directa va como $1/d^2$. Por eso la Luna, 27 millones de veces menos masiva que el Sol pero 390 veces más cerca, gana.
 - Es un armónico esférico de grado 2, y de ahí que M2 vaya como $\cos^2\varphi$ y K1 como $|\sin 2\varphi|$.
+
+---
+
+# Anexo · Las ecuaciones completas
+
+### Movimiento (Newton):   $\dfrac{\partial \mathbf{u}}{\partial t} + f\,\hat{\mathbf{k}} \times \mathbf{u} = -g\,\nabla \left( \eta - \dfrac{V}{g} \right)$
+
+- El agua acelera por el gradiente de presión, que viene de $\eta$, y por la marea de equilibrio $V/g$. Con $\eta = \eta_{eq}$ el paréntesis se anula y no hay fuerza neta: el equilibrio de Newton.
+- $f = 2\Omega \sin\varphi$ es el término de Coriolis. Sin fricción, y sin los términos no lineales: la corriente de marea es de ~1 m/s y la onda viaja a ~200 m/s.
+
+### Continuidad (masa):   $\dfrac{\partial \eta}{\partial t} + \nabla \cdot (h\,\mathbf{u}) = 0$
+
+- La superficie sube donde el flujo converge. Con $\eta \ll h$ —centímetros contra kilómetros— se usa $h$ y no $h + \eta$.
+
+---
+
+# Anexo · Eliminar $\mathbf{u}$
+
+- Para ver la estructura de la onda tomo $h$ constante y $f \approx 0$. Desaparece Coriolis, y con él los puntos anfidrómicos, que son un efecto de la rotación.
+
+### Paso 1. Abro el gradiente en el movimiento
+
+### $\dfrac{\partial \mathbf{u}}{\partial t} = -g\,\nabla \eta + \nabla V$
+
+- $\nabla V$ es una fuerza externa por unidad de masa, aplicada al agua directamente.
+
+### Paso 2. Divergencia de los dos lados
+
+### $\dfrac{\partial}{\partial t}\left( \nabla \cdot \mathbf{u} \right) = -g\,\nabla^2 \eta + \nabla^2 V$
+
+- Las derivadas en $t$ y en el espacio conmutan, y $\nabla^2 = \partial_x^2 + \partial_y^2$.
+
+---
+
+# Anexo · Sustituir la continuidad
+
+### Paso 3. Derivo la continuidad respecto de $t$
+
+### $\dfrac{\partial^2 \eta}{\partial t^2} + h\,\dfrac{\partial}{\partial t}\left( \nabla \cdot \mathbf{u} \right) = 0$
+
+- Y ahí aparece la misma cantidad que en el paso 2.
+
+### Paso 4. Igualo las dos expresiones de $\partial_t (\nabla \cdot \mathbf{u})$
+
+### $-\dfrac{1}{h}\,\dfrac{\partial^2 \eta}{\partial t^2} = -g\,\nabla^2 \eta + \nabla^2 V$
+
+- Multiplico por $-h$ y paso el término de $\eta$ a la izquierda.
+
