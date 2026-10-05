@@ -96,46 +96,72 @@ Con $M = \frac{4}{3}\pi R^3 \rho_M$ y $m = \frac{4}{3}\pi r^3 \rho_m$, el radio 
 
 # La marea es una onda forzada (Laplace, 1776)
 
-## Aguas someras: un canal de profundidad $h$
+## Aguas someras: una capa delgada de profundidad $h$
 
-- La onda de marea mide miles de kilómetros de largo y el océano 4 km de hondo. Con esa desproporción la velocidad $u$ es la misma a toda profundidad y la presión es hidrostática.
-- $\zeta(x,t)$ es la superficie medida desde el reposo; $u(x,t)$, la velocidad de la columna.
-- **Masa.** La columna mide $h + \zeta$. Lo que entra menos lo que sale cambia su altura:
-
-### $\partial_t \zeta + \partial_x \left[(h+\zeta)\,u\right] = 0$
-
-- Y como $\zeta \ll h$ —centímetros contra kilómetros— el producto $\zeta u$ se va:
-
-### $\partial_t \zeta + h\, \partial_x u = 0$
+- La onda de marea mide miles de kilómetros de largo y el océano 4 km de hondo. Con esa desproporción las aceleraciones verticales no cuentan, y el agua se mueve en bloque: la velocidad es la misma a toda profundidad.
+- Las incógnitas, en el plano horizontal $(x, y)$:
+  - $\eta(x,y,t)$: la elevación de la superficie sobre el nivel de reposo
+  - $\mathbf{u}(x,y,t) = (u, v)$: la velocidad horizontal del agua
+- Lo que sabemos: $g$, la profundidad $h$, y el potencial generador $V(x,y,t)$ de la lámina 3, con el convenio $\eta_{eq} = V/g$ para la marea de equilibrio.
 
 ---
 
-# El momento, y por dónde entra la marea
+# Las dos ecuaciones
 
-- La presión es hidrostática, $p = \rho g(\zeta - z)$, así que su gradiente horizontal por unidad de masa es $-g\,\partial_x \zeta$: el agua cae hacia donde la superficie está más baja.
-- La marea añade su fuerza por unidad de masa, que con el convenio $\eta = V/g$ de la lámina 3 es $+\partial_x V$.
+### Movimiento (Newton):   $\dfrac{\partial \mathbf{u}}{\partial t} + f\,\hat{\mathbf{k}} \times \mathbf{u} = -g\,\nabla \left( \eta - \dfrac{V}{g} \right)$
 
-### $\partial_t u + u\, \partial_x u = -g\, \partial_x \zeta + \partial_x V$
+- El agua acelera por el gradiente de presión, que viene de $\eta$, y por la marea de equilibrio $V/g$. Con $\eta = \eta_{eq}$ el paréntesis se anula y no hay fuerza neta: el equilibrio de Newton.
+- $f = 2\Omega \sin\varphi$ es el término de Coriolis. Sin fricción, y sin los términos no lineales: la corriente de marea es de ~1 m/s y la onda viaja a ~200 m/s.
 
-- El término $u\,\partial_x u$ se va también: la corriente de marea es de ~1 m/s y la onda viaja a ~200 m/s.
+### Continuidad (masa):   $\dfrac{\partial \eta}{\partial t} + \nabla \cdot (h\,\mathbf{u}) = 0$
 
-### $\partial_t u = -g\, \partial_x \zeta + \partial_x V$
+- La superficie sube donde el flujo converge. Con $\eta \ll h$ —centímetros contra kilómetros— se usa $h$ y no $h + \eta$.
 
 ---
 
-# Eliminar $u$: la ecuación de onda forzada
+# Eliminar $\mathbf{u}$
 
-- Derivo la continuidad respecto del tiempo:   $\partial_t^2 \zeta + h\, \partial_x (\partial_t u) = 0$
-- Y meto dentro el momento, que es justo $\partial_t u$:
+- Para ver la estructura de la onda tomo $h$ constante y $f \approx 0$. Desaparece Coriolis, y con él los puntos anfidrómicos, que son un efecto de la rotación.
 
-### $\partial_t^2 \zeta + h\, \partial_x \left( -g\, \partial_x \zeta + \partial_x V \right) = 0$
+### Paso 1. Abro el gradiente en el movimiento
 
-### $\partial_t^2 \zeta - gh\, \partial_x^2 \zeta = -h\, \partial_x^2 V$
+### $\dfrac{\partial \mathbf{u}}{\partial t} = -g\,\nabla \eta + \nabla V$
 
-- A la izquierda, la onda libre, que viaja a $c = \sqrt{gh}$: **200 m/s** en 4 km de océano. A la derecha, el **forzamiento**.
-- Con la marea de equilibrio $\zeta_{eq} = V/g$ el forzamiento es $-c^2\, \partial_x^2 \zeta_{eq}$: al mar no lo fuerza la marea de equilibrio, sino su **curvatura**.
-- Si $c$ fuese infinita saldría $\zeta = \zeta_{eq}$, que es la teoría de Newton. Es finita, y de ahí que la marea real vaya desfasada y pueda entrar en resonancia.
+- $\nabla V$ es una fuerza externa por unidad de masa, aplicada al agua directamente.
 
+### Paso 2. Divergencia de los dos lados
+
+### $\dfrac{\partial}{\partial t}\left( \nabla \cdot \mathbf{u} \right) = -g\,\nabla^2 \eta + \nabla^2 V$
+
+- Las derivadas en $t$ y en el espacio conmutan, y $\nabla^2 = \partial_x^2 + \partial_y^2$.
+
+---
+
+# Sustituir la continuidad
+
+### Paso 3. Derivo la continuidad respecto de $t$
+
+### $\dfrac{\partial^2 \eta}{\partial t^2} + h\,\dfrac{\partial}{\partial t}\left( \nabla \cdot \mathbf{u} \right) = 0$
+
+- Y ahí aparece la misma cantidad que en el paso 2.
+
+### Paso 4. Igualo las dos expresiones de $\partial_t (\nabla \cdot \mathbf{u})$
+
+### $-\dfrac{1}{h}\,\dfrac{\partial^2 \eta}{\partial t^2} = -g\,\nabla^2 \eta + \nabla^2 V$
+
+- Multiplico por $-h$ y paso el término de $\eta$ a la izquierda.
+
+---
+
+# La ecuación de onda forzada
+
+### $\dfrac{\partial^2 \eta}{\partial t^2} - c^2\,\nabla^2 \eta = -h\,\nabla^2 V$      con  $c = \sqrt{gh}$
+
+- **Izquierda**: la onda libre de d'Alembert. La inercia del agua ($\partial_t^2 \eta$) contra la gravedad que la restituye ($g\nabla^2 \eta$). Viaja a $c = $ **200 m/s** en 4 km de océano.
+- **Derecha**: el forzamiento. Como $V = g\,\eta_{eq}$, vale $-c^2\,\nabla^2 \eta_{eq}$: al mar no lo fuerza la marea de equilibrio, sino su **curvatura**.
+- $V$ es cuadrupolar y la Tierra gira debajo de la Luna, así que el forzamiento es periódico en M2, S2, K1, y las demás frecuencias astronómicas.
+- Si $c$ fuese infinita saldría $\eta = \eta_{eq}$, que es la teoría de Newton. Es finita, y de ahí que la marea real vaya desfasada y pueda entrar en resonancia.
+- Falta fijar la costa: ahí $\mathbf{u} \cdot \hat{\mathbf{n}} = 0$. De esa condición y de la forma de la cuenca sale la amplitud.
 ---
 
 # Los componentes armónicos: Kelvin, 1867
@@ -143,7 +169,7 @@ Con $M = \frac{4}{3}\pi R^3 \rho_M$ y $m = \frac{4}{3}\pi r^3 \rho_m$, el radio 
 - El forzamiento tiene pocas frecuencias, y todas astronómicas: día lunar, mes, año, ciclo nodal de 18,6 años. Doodson (1921) desarrolló $V$ en **388 líneas**, cada una con seis enteros. De ahí los nombres M2, S2, N2, K1.
 - Un sistema lineal forzado responde **en las frecuencias que lo fuerzan**, con su propia amplitud y fase en cada una. Y esas las pone el océano, no la astronomía.
 
-### $\zeta(t) = \sum_i H_i \cos(\omega_i t - \phi_i)$
+### $\eta(t) = \sum_i H_i \cos(\omega_i t - \phi_i)$
 
 ![](img/s10-sintesis.png)
 
@@ -176,33 +202,63 @@ Con $M = \frac{4}{3}\pi R^3 \rho_M$ y $m = \frac{4}{3}\pi r^3 \rho_m$, el radio 
 
 ---
 
-# Anexo · Geometría y el potencial exacto
+# Anexo · Geometría: la distancia a la Luna
 
-- La Luna en $\mathbf{d}$, la estación en $\mathbf{r}$, las dos desde el centro de la Tierra, y $\psi$ el ángulo entre ellas: $|\mathbf{d}-\mathbf{r}| = \sqrt{d^2 - 2dr\cos\psi + r^2}$
-- Potencial de la Luna en la estación: $\Phi = -GM/|\mathbf{d}-\mathbf{r}|$
-- **Convenio de signo**: llamamos $V$ a *menos* el potencial generador, para que la marea de equilibrio sea $\eta = V/g$ y $V>0$ sea pleamar. La fuerza por unidad de masa es entonces $+\nabla V$.
+- El centro de la Tierra $O$, la estación $P$ a distancia $r$ de $O$, y la Luna $M$ a distancia $d$ de $O$; $\psi$ es el ángulo en $O$ entre $\mathbf{r}$ y $\mathbf{d}$, y $\rho$ la distancia de $P$ a la Luna.
+- Teorema del coseno en el triángulo $OPM$:
 
-### $V(\mathbf{r}) = GM \left( \frac{1}{|\mathbf{d}-\mathbf{r}|} - \frac{1}{d} - \frac{\mathbf{r}\cdot\mathbf{d}}{d^3} \right)$
+### $\rho^2 = d^2 + r^2 - 2dr\cos\psi$
 
-- Exacto, sin truncar. Es lo que calcula `tide/potential.py:tide_generating_potential()`.
+- Saco $d^2$ de factor común y defino $\alpha = r/d$:
 
----
+### $\dfrac{1}{\rho} = \dfrac{1}{d}\,\dfrac{1}{\sqrt{1 - 2\alpha\cos\psi + \alpha^2}}$
 
-# Anexo · El desarrollo de Legendre
-
-### $\frac{1}{|\mathbf{d}-\mathbf{r}|} = \frac{1}{d} \sum_{n=0}^{\infty} \left( \frac{r}{d} \right)^n P_n(\cos\psi)$     para $r < d$
-
-- $P_0 = 1$,    $P_1 = \cos\psi$,    $P_2 = \frac{1}{2}(3\cos^2\psi - 1)$,    $P_3 = \frac{1}{2}(5\cos^3\psi - 3\cos\psi)$
-- El término $n=0$ vale $GM/d$: es **exactamente** la segunda pieza que restamos.
-- El término $n=1$ vale $GM\,r\cos\psi/d^2 = GM\,\mathbf{r}\cdot\mathbf{d}/d^3$: es **exactamente** la tercera.
-- Los dos primeros términos del desarrollo son las dos piezas que no hacen marea. No se desprecian: se cancelan.
+- Para la Luna, $\alpha = 6371/384\,400 \approx 0{,}0166 \ll 1$: la estación está mucho más cerca del centro de la Tierra que la Luna.
 
 ---
 
-# Anexo · El cuadrupolo, y qué se desprecia
+# Anexo · Los polinomios de Legendre
 
-### $V = \frac{GM}{d} \sum_{n \geq 2} \left( \frac{r}{d} \right)^n P_n(\cos\psi)$
+- La raíz de la lámina anterior es la **función generatriz de Legendre**. Para $\alpha < 1$:
 
-- El primer superviviente es $n=2$:   $V_2 = \frac{GM r^2}{d^3} P_2(\cos\psi) = \frac{GM r^2}{2d^3}(3\cos^2\psi - 1)$
-- El siguiente es menor en un factor $r/d$. Para la Luna, $R_\oplus/d \approx 1/60$, o sea un 1,7%; el proyecto compara el exacto contra el cuadrupolo y mide **1,8%**.
-- $P_2$ es **par** en $\cos\psi$: de ahí los dos bultos. Y es un armónico esférico de grado 2, de ahí que M2 vaya como $\cos^2\varphi$ y K1 como $|\sin 2\varphi|$.
+### $\dfrac{1}{\sqrt{1 - 2\alpha x + \alpha^2}} = \sum_{n=0}^{\infty} \alpha^n P_n(x)$
+
+- $P_0 = 1$,    $P_1 = x$,    $P_2 = \frac{1}{2}(3x^2 - 1)$,    $P_3 = \frac{1}{2}(5x^3 - 3x)$,    con $x = \cos\psi$
+- Sustituyo en $1/\rho$:
+
+### $\dfrac{1}{\rho} = \dfrac{1}{d} \sum_{n=0}^{\infty} \left( \dfrac{r}{d} \right)^n P_n(\cos\psi)$
+
+- Cada término es $\alpha \approx 1/60$ veces el anterior, así que la serie converge deprisa.
+
+---
+
+# Anexo · Lo que se resta: la caída libre de la Tierra
+
+- El potencial de la Luna en $P$ es $\Phi = -GM/\rho$. Sus tres primeros términos:
+
+### $\Phi = -\dfrac{GM}{d} \;-\; \dfrac{GM\,r}{d^2}\cos\psi \;-\; \dfrac{GM\,r^2}{2d^3}(3\cos^2\psi - 1) \;-\; \cdots$
+
+- Pero la Tierra no está quieta: cae hacia la Luna con la aceleración que la Luna produce en $O$, $\mathbf{a}_O = GM/d^2\;\hat{\mathbf{d}}$. En el sistema de la Tierra eso es una fuerza inercial uniforme, de potencial  $-\mathbf{a}_O \cdot \mathbf{r} = -\dfrac{GM\,r}{d^2}\cos\psi$
+- Resto ese potencial inercial, y también la constante $-GM/d$, que no ejerce fuerza.
+- **Convenio de signo**: llamamos $V$ a *menos* el potencial generador, para que la marea de equilibrio sea $\eta_{eq} = V/g$ y $V>0$ sea pleamar. La fuerza por unidad de masa es entonces $+\nabla V$.
+
+---
+
+# Anexo · Qué sobrevive: el cuadrupolo
+
+- $n=0$: $-GM/d - (-GM/d) = 0$. La constante se va.
+- $n=1$: $-\dfrac{GM\,r}{d^2}\cos\psi - \left(-\dfrac{GM\,r}{d^2}\cos\psi\right) = 0$. Se cancela con la caída libre: es la traslación de la Tierra entera.
+- No se desprecian: se cancelan, exactamente. El primero que queda es $n=2$:
+
+### $V \approx \dfrac{GM\,r^2}{2d^3}\,(3\cos^2\psi - 1)$
+
+- El siguiente término es menor en un factor $r/d$. El proyecto compara el potencial exacto, `tide/potential.py:tide_generating_potential()`, contra el cuadrupolo y mide **1,8%** de diferencia.
+
+---
+
+# Anexo · Qué dice el cuadrupolo
+
+- **Dos bultos**: $3\cos^2\psi - 1$ vale $+2$ en $\psi = 0°$ (bajo la Luna) y en $\psi = 180°$ (en las antípodas), y es **par** en $\cos\psi$. Pleamar en ambos.
+- **Cuadraturas**: vale $0$ en $\psi \approx 54{,}7°$ y $125{,}3°$. A $\psi = 90°$ vale $-1$: bajamar.
+- **El cubo**: el potencial de marea va como $1/d^3$, mientras que la atracción directa va como $1/d^2$. Por eso la Luna, 27 millones de veces menos masiva que el Sol pero 390 veces más cerca, gana.
+- Es un armónico esférico de grado 2, y de ahí que M2 vaya como $\cos^2\varphi$ y K1 como $|\sin 2\varphi|$.
