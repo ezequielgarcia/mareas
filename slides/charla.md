@@ -142,6 +142,55 @@ Derivo la continuidad respecto de $t$ y meto el movimiento, que da $\partial_t u
 
 ---
 
+# Los ocho armónicos que mandan
+
+- Con los números del código del proyecto: marea de equilibrio a 34,6° S, un ciclo nodal completo, factor de Love incluido.
+
+```
+        origen                     periodo    amplitud
+  M2    Luna, principal            12,42 h    11,4 cm
+  S2    Sol, principal             12,00 h     5,3 cm
+  N2    Luna, órbita elíptica      12,66 h     2,1 cm
+  K2    Luna y Sol, declinación    11,97 h     1,5 cm
+  K1    Luna y Sol, declinación    23,93 h     9,2 cm
+  O1    Luna, declinación          25,82 h     6,6 cm
+  P1    Sol, declinación           24,07 h     3,0 cm
+  Q1    Luna, órbita elíptica      26,87 h     1,2 cm
+```
+
+- Las **semidiurnas** (2) son los dos bultos con la Tierra girando. Las **diurnas** (1) sólo existen por la inclinación de 23,4°.
+- La amplitud de M2 va como $\cos^2\varphi$ y la de K1 como $|\sin 2\varphi|$, así que cuál manda depende de la latitud.
+
+---
+
+# Río de la Plata: ¿qué armónico importa?
+
+## Primero, el potencial a 34,6° S
+
+- $\cos^2\varphi = 0{,}67$ y $\sin 2\varphi = 0{,}94$: la diurna pierde poco y la semidiurna pierde bastante. M2 11,4 cm; K1 9,2 cm; O1 6,6 cm; S2 5,3 cm.
+- El factor de forma de la marea de equilibrio:
+
+### $F = \dfrac{K_1 + O_1}{M_2 + S_2} = \dfrac{9{,}2 + 6{,}6}{11{,}4 + 5{,}3} = 0{,}95$
+
+- Entre 0,25 y 1,5 la marea es **mixta**: a 45° sube a 1,37, y en el ecuador las diurnas desaparecen. El Plata cae en medio.
+
+## Después, lo que se mide en Buenos Aires
+
+- M2 = **0,27 m** y O1 = **0,15 m**. Dividiendo por el equilibrio: ×2,4 para M2 y ×2,3 para O1.
+- La razón O1/M2 sale 0,56 contra 0,58 del potencial. El mar amplifica las dos bandas casi igual.
+
+---
+
+# Río de la Plata: por qué esos dos
+
+- **El forzamiento local es minúsculo.** En la ecuación de onda la fuente es $-h\,\partial_x^2 V$, y vale por la profundidad. Con $h \approx 10$ m en vez de 4.000 m, es 400 veces más débil que en el océano abierto.
+- Entonces la marea no nace en el estuario. **Entra por la boca**, desde la plataforma, como una onda de Kelvin que deja la costa a su izquierda.
+- Dentro, la fricción de fondo decide: con 1–4 m de profundidad en el tramo alto, casi toda la energía se disipa antes de llegar. La amplitud no crece hacia aguas arriba: lo que cuenta es lo que entra por la boca.
+- La resonancia no desempata. Con $L \approx 320$ km y $h$ entre 5 y 15 m, $L/\lambda$ vale 0,6–1,0 para M2 y 0,3–0,5 para O1. Hay resonancias en 1/4 y 3/4: depende de una profundidad que no está medida, y la fricción las borra.
+- El resultado: el potencial pone la jerarquía M2, K1, O1, y el mar casi la conserva en M2 y O1. **Importan M2 y O1.**
+- Datos de Buenos Aires y del estuario: Moreira y Simionato (2019), *Meteorologica*.
+---
+
 # 1872: la calculadora analógica de mareas
 
 ![Máquina de Kelvin, A. Légé & Co., Londres, 1872 · foto CC0](img/s11-kelvin-1872.jpg)
