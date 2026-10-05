@@ -9,9 +9,9 @@ others are analytic constructions or figures from the literature. Which is which
 is stated in each docstring and in the figure caption, so there is never any
 doubt about what is our own result and what is context.
 
-Note on language: code, identifiers and comments are English, like the rest of
-the software. Only the plot labels and titles are Spanish, because they are
-content read by the Spanish-language essays in docs/.
+Code, identifiers and comments are English, like the rest of the software. Only
+the plot labels and titles are Spanish, because they are content read by the
+Spanish-language essays in docs/.
 """
 
 import os
@@ -319,7 +319,7 @@ def fig_solar_system():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 5.0))
 
     # Tide each satellite suffers from its primary. Satellite radius and
-    # estimated dissipation are included to show GM/d^3 is not the whole story.
+    # estimated dissipation are included to show GM/d^3 is not the only factor.
     # Columns: label, primary GM, orbital radius, satellite radius, heat, colour.
     pairs = [
         ("Ío\n← Júpiter", GM_JUPITER, 4.217e8, 1822e3, "~100 TW", "tab:red"),

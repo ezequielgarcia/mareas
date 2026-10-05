@@ -3,7 +3,7 @@
 Run this once; paste the result into tide/constants.py as A_MOON_EPOCH and
 E_MOON_EPOCH. It is separated out from the numbered programs because it is a
 setup step, not part of the physics story -- but it is worth reading, because
-the reason it is necessary is a genuinely instructive gotcha. See the module
+the reason it is necessary is an instructive gotcha. See the module
 docstring in tide/orbits.py.
 
 Run:  python calibrate.py

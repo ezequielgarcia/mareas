@@ -53,7 +53,7 @@ sea **semidiurno**.
 
 ## El argumento definitivo contra la explicación centrífuga
 
-Es muy común leer que el bulto lejano se debe a la "fuerza centrífuga" de la
+Una explicación habitual del bulto lejano es la "fuerza centrífuga" de la
 rotación de la Tierra alrededor del baricentro Tierra-Luna. Esa explicación se
 puede hacer funcionar con cuidado, pero casi siempre se usa mal, y hay una manera
 de ver que no es lo esencial:
@@ -99,7 +99,7 @@ a la Luna), el término dominante es:
 V ≈ (GM r² / 2d³) (3cos²ψ − 1)
 ```
 
-donde ψ es el ángulo entre la estación y la Luna. Y ahí está la clave algebraica:
+donde ψ es el ángulo entre la estación y la Luna:
 
 | ψ | 3cos²ψ − 1 | |
 |---|---|---|

@@ -160,7 +160,7 @@ nuestras de equilibrio, y predice la marea de un día concreto. El motor ya est�
 escrito; solo hay que cambiar los números de entrada. Y verás aparecer la doble
 pleamar sola, en cuanto incluyas M4 con su fase real.
 
-Ese es, en el fondo, todo el proyecto en una frase: **la astronomía te da el reloj;
+Todo el proyecto en una frase: **la astronomía te da el reloj;
 el océano y el almanaque te dan la amplitud.**
 
 ---

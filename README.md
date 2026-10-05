@@ -160,9 +160,9 @@ Absolute amplitude too: M2 at the equator comes out at 16.783 cm, which with the
 Love factor divided back out is 24.22 cm against the classical rigid-Earth
 equilibrium value of ~24.2 cm.
 
-And the latitude structure is essentially exact — M2 follows `cos²φ` and K1
-follows `|sin 2φ|` to four digits, because they are degree-2 sectoral and
-tesseral harmonics respectively.
+And the latitude structure holds to four digits: M2 follows `cos²φ` and K1
+follows `|sin 2φ|`, because they are degree-2 sectoral and tesseral harmonics
+respectively.
 
 ---
 
@@ -207,7 +207,7 @@ Set `LOVE_FACTOR = 1.0` in `tide/constants.py` to see the rigid case.
 
 ### 5. Osculating elements ≠ mean elements
 
-**The biggest trap.** The numbers you look up — "the Moon's semi-major axis is
+**The trap.** The numbers you look up — "the Moon's semi-major axis is
 384,399 km, eccentricity 0.0549" — are *mean* elements, averages over an orbit
 the Sun is constantly deforming. Feed 384,399 km into a two-body initial
 condition and the orbit oscillates about a *different* mean: we measured the
@@ -287,16 +287,16 @@ the tide is purely semidiurnal — at 45° the diurnal component pollutes it.
 
 The natural stage 6 is the dynamic ocean: solve the Laplace tidal equations
 (shallow-water on a rotating sphere) forced by the potential from `03`, and watch
-amphidromic systems and basin resonance appear. *That* is the step where a GPU
-earns its keep — a global grid over many timesteps, with differentiable friction
-and bathymetry for inversion. JAX would be the right tool there. It is the wrong
+amphidromic systems and basin resonance appear. *That* is the step a GPU is
+for: a global grid over many timesteps, with differentiable friction and
+bathymetry for inversion. JAX would be the right tool there. It is the wrong
 tool for the present project: three bodies for 20 years is a sub-minute
 single-core job, and it needs float64 throughout, which JAX does not use by
 default and which consumer GPUs run at 1/32 rate.
 
 ## Reading
 
-Genuinely accessible, roughly in order of how much they assume:
+Accessible, roughly in order of how much they assume:
 
 - **Steacy Hicks, *Understanding Tides*** (NOAA CO-OPS, 2006). ~66 pages, free
   PDF, written for beginners, and it covers constituents and the 19-year datum

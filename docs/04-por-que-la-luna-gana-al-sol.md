@@ -42,7 +42,7 @@ El parámetro que mide la capacidad de levantar marea es GM/d³:
 La razón sale **2.18** a favor de la Luna. Es el número que el programa
 `03_tidal_bulge.py` calcula y verifica.
 
-Merece la pena ver cómo se compensan los dos factores:
+Los dos factores se compensan así:
 
 - El Sol gana en masa por un factor de **27,000,000**.
 - La Luna gana en distancia por un factor de 390, pero **al cubo**: 390³ ≈
@@ -70,7 +70,7 @@ Tomemos Júpiter en su máximo acercamiento a la Tierra (unas 4.2 UA):
 | **Venus** (máx. acercamiento) | 4.6 × 10⁻¹⁸ | 1 / 19,000 |
 | **Júpiter** (máx. acercamiento) | 5.1 × 10⁻¹⁹ | 1 / 170,000 |
 
-Dos cosas llamativas:
+Dos resultados llamativos:
 
 1. **Júpiter levanta una marea 170,000 veces menor que la Luna.** Sobre una marea
    de equilibrio de ~25 cm, eso son **1.5 micras**. Menos que el grosor de un pelo.
@@ -97,7 +97,7 @@ válido, así que no lo tomes como una predicción cuantitativa de deformación.
 como comparación de capacidad de generar gradiente gravitatorio, el orden de
 magnitud es real.)
 
-La moraleja: si alguien te dice que la Luna "controla el agua de tu cuerpo porque
+Así que si alguien te dice que la Luna "controla el agua de tu cuerpo porque
 el cuerpo es 70% agua", la persona que tienes al lado la está controlando 54,000
 veces más. Y lo que sí controla la Luna, el océano, lo controla porque es una masa
 de agua de miles de kilómetros de extensión, libre de moverse horizontalmente

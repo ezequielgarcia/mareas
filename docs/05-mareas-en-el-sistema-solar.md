@@ -25,7 +25,7 @@ acoplada en órbita circular **no se calienta**. El bulto queda fijo, no hay
 deformación cíclica, no hay fricción interna. Para calentar hace falta que el bulto
 suba y baje.
 
-Y ahí está la clave: la órbita de Ío **no es circular**, y no lo es porque no puede.
+La órbita de Ío **no es circular**, y no lo es porque no puede.
 
 Ío, Europa y Ganímedes están en una **resonancia de Laplace 1:2:4**: por cada
 vuelta de Ganímedes, Europa da dos e Ío cuatro. Los encuentros repetidos con las

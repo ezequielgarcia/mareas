@@ -3,8 +3,8 @@
 Sí: **3.8 cm al año**, medido directamente. Y la culpa es de las mareas.
 
 Este es probablemente el resultado más bonito de toda la teoría de mareas, porque
-conecta tres cosas que parecen no tener nada que ver: por qué los días se alargan,
-por qué la Luna se aleja, y por qué se disipa energía en el mar de Bering.
+conecta por qué los días se alargan, por qué la Luna se aleja y por qué se disipa
+energía en el mar de Bering, que parecen no tener nada que ver.
 
 ![El bulto adelantado y el reparto de momento angular](img/02-retroceso-lunar.png)
 
@@ -43,7 +43,7 @@ Cuatro métodos completamente distintos, misma conclusión.
 
 ## El mecanismo: el bulto va por delante
 
-Aquí está el truco, y es puramente geométrico.
+El mecanismo es puramente geométrico.
 
 Si la Tierra fuese un fluido sin rozamiento, el bulto de marea apuntaría
 exactamente hacia la Luna. Pero hay fricción, el agua tarda en responder, y la
@@ -68,7 +68,7 @@ la órbita de la Luna.
 
 ### Un matiz: hay DOS bultos, y tiran en sentidos opuestos
 
-Se suele contar como si solo existiera el bulto cercano, pero recuerda del
+Lo de arriba habla como si solo existiera el bulto cercano, pero recuerda del
 [documento 01](01-por-que-hay-dos-mareas-al-dia.md) que hay dos:
 
 - el bulto **cercano** va adelantado y tira de la Luna **hacia adelante**;
@@ -93,7 +93,7 @@ Pero el proceso lleva funcionando desde que se formó la Luna, hace ~4.500 millo
 de años, y al principio era muchísimo más intenso porque la Luna estaba mucho más
 cerca (y la marea va como 1/d³).
 
-### El detalle que a todo el mundo le descoloca
+### Gana energía y se mueve más despacio
 
 El bulto acelera a la Luna, la empuja hacia adelante en su órbita... y el
 resultado es que **la Luna se mueve más despacio**.
@@ -111,8 +111,7 @@ La Luna se está frenando unos 5 micrómetros/s por siglo mientras gana energía
 
 ## Dos contabilidades distintas: momento angular y energía
 
-Aquí está la confusión más común de todo este tema, y merece una tabla propia.
-**No son la misma cuenta.**
+Esto merece una tabla propia. **No son la misma cuenta.**
 
 - **Momento angular: se conserva.** Es una transferencia limpia de la rotación
   terrestre a la órbita lunar.
@@ -199,8 +198,7 @@ por menos.
 
 ## El problema del pasado
 
-Aquí viene lo interesante, y es un sitio donde una extrapolación ingenua se
-estrella de frente.
+Aquí una extrapolación ingenua se estrella de frente.
 
 Si la Luna se aleja 3.8 cm/año y está a 384,400 km, extrapolando linealmente
 hacia atrás estaría *pegada a la Tierra* hace unos 1,500 millones de años. Pero
@@ -247,9 +245,9 @@ conserva a 8.7 × 10⁻¹³ en 20 años, que es precisamente la razón de que lo
 períodos salgan bien. Y también la razón de que la Luna no se aleje ni un
 milímetro.
 
-Para obtener el retroceso harían falta dos cosas que no tenemos: un océano con
-fricción, y el par de fuerzas del bulto desfasado actuando de vuelta sobre la
-órbita. Es una extensión posible, pero es un proyecto distinto.
+Para obtener el retroceso harían falta un océano con fricción y el par de fuerzas
+del bulto desfasado actuando de vuelta sobre la órbita, y no tenemos ninguno de
+los dos. Es una extensión posible, pero es un proyecto distinto.
 
 ---
 

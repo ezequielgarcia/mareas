@@ -157,13 +157,13 @@ largas de mareógrafos de todo el mundo, para análisis de nivel medio y tendenc
 Cuando hayas leído lo básico: descarga un año de datos de un mareógrafo de REDMAR
 cerca de donde navegas, pásalo tal cual por `tide/harmonics.py:fit()`, y compara.
 
-Vas a encontrar tres cosas, y las tres son instructivas:
+Vas a encontrar tres resultados, y los tres son instructivos:
 
 1. Los **períodos** coinciden exactamente con los nuestros — la astronomía es la
    astronomía.
-2. Las **amplitudes** no se parecen en nada, porque ahí está la respuesta del
+2. Las **amplitudes** no se parecen en nada, y esa diferencia es la respuesta del
    océano.
 3. Aparece **varianza que ningún constituyente astronómico explica**: es la marea
    meteorológica, y es la razón de que la predicción de marea nunca sea perfecta.
 
-Ese ejercicio es, en el fondo, el resumen de todo el proyecto.
+Ese ejercicio resume todo el proyecto.

@@ -95,8 +95,8 @@ lados de la identidad instante a instante:
 | `2K + U + f·r` (con el Sol) | **1.2 × 10⁻⁶** | **1.0000000** |
 
 donde `f` es la aceleración perturbadora del Sol sobre la órbita relativa. Con el
-tercer cuerpo incluido, la identidad se cumple a una parte en un millón — que es
-básicamente el error del integrador. No es una aproximación: es una identidad
+tercer cuerpo incluido, la identidad se cumple a una parte en un millón, que es
+el error del integrador. No es una aproximación: es una identidad
 mecánica.
 
 ---
@@ -226,8 +226,8 @@ Y derivando respecto al radio orbital, con `μ = G(M+m)`:
 | `U = −μ/a` | `dU/da > 0` | la potencial sube, **el doble** |
 | `E = −μ/2a` | `dE/da > 0` | la total sube |
 
-`dE = −dK = ½ dU`. De aquí salen cuatro cosas aparentemente absurdas y todas
-ciertas:
+`dE = −dK = ½ dU`. De aquí salen cuatro consecuencias aparentemente absurdas y
+todas ciertas:
 
 **1. La Luna gana energía y se frena.** Sube de órbita, la potencial sube al doble
 de lo que baja la cinética, y su velocidad orbital disminuye unos 5 micrómetros/s
@@ -340,7 +340,7 @@ De este teorema viene todo un vocabulario que se usa a diario en cosmología:
 
 ## Qué hace y qué no hace este proyecto
 
-Conviene separarlo bien, porque son dos cosas distintas:
+Conviene separarlo bien, porque no es lo mismo:
 
 | | |
 |---|---|

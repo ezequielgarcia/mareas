@@ -2,7 +2,7 @@
 
 New idea: Newton's law of gravity, integrated numerically. Nothing about tides
 yet. The point is to establish that the integrator is trustworthy, by checking
-it against three things we know analytically:
+it against what we know analytically:
 
   * Kepler's 1st law -- the orbit is a closed ellipse with the measured
     semi-major axis and eccentricity we put in;
