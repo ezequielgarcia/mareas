@@ -14,3 +14,7 @@ figures/
 # Generated slides -- rebuild with slides/make_slides.py
 slides/*.pdf
 slides/*-png/
+
+# charla.pdf IS committed on purpose: it is the deck as given, so it can be
+# downloaded and projected without installing anything.
+!slides/charla.pdf
