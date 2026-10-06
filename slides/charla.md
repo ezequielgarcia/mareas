@@ -23,12 +23,12 @@ theme: light
 
 # De dónde sale la marea
 
-## No es la atracción: es la diferencia
+## No es la atracción: es el gradiente
 
-- La Luna tira de **todo** a la vez: del agua, de la roca, del planeta entero. Y todo cae hacia ella junto.
-- La Tierra está en **caída libre**, y en caída libre la gravedad uniforme es invisible. Sólo se nota lo que *varía* de un punto a otro.
+- La Luna tira de **todo** a la vez. Todo cae hacia ella junto.
+- La Tierra está en **caída libre**, la gravedad uniforme es invisible.
 - Potencial de la Luna en una estación $\mathbf{r}$, con la Luna en $\mathbf{d}$:  $\Phi = -GM/|\mathbf{d}-\mathbf{r}|$
-- Le quitamos las dos piezas que **no** levantan marea:
+- Quitamos las dos partes que **no** levantan marea:
   - $-GM/|\mathbf{d}|$: constante en toda la Tierra, y un potencial constante no ejerce fuerza
   - el término **lineal** en $\mathbf{r}$: la caída libre de la Tierra entera, se cancela
 
@@ -36,14 +36,27 @@ theme: light
 
 ---
 
-# Dos bultos, y por qué el Sol pierde
+# Dos bultos
 
 ### $V \approx \frac{GM\,r^2}{2d^3}\,(3\cos^2\psi - 1)$   para $r \ll d$
 
 ![](img/s04-perfil.png)
 
 - **Par en $\cos\psi$**: no distingue el lado cercano del lejano. **Dos bultos**: 0° y 180°.
-- **$1/d^3$, no $1/d^2$**: el Sol gana 27 millones en masa; la Luna, 59 **al cubo**. **2.18 a 1**.
+
+---
+
+# Por qué la Luna gana: 59 millones contra 27
+
+### La marea va como $\dfrac{M}{d^3}$: la masa arriba, la distancia **al cubo** abajo
+
+```
+  M_sol / M_luna         =  27,1 millones
+  pero  (d_sol/d_luna)³  =  58,9 millones
+```
+
+- 58,94 millones / 27,06 millones = 2,178
+- El factor no es tan grande, y eso nos da mareas vivas y muertas.
 
 ---
 
@@ -56,6 +69,16 @@ theme: light
 - Hace 620 millones de años: día de **21.9 h**, año de **400 días**. ¡Eran más cortos!
 
 ![](img/s05-retroceso.png)
+
+---
+
+# La Luna ya pasó por esto: acoplamiento de marea
+
+- El mismo par, al revés. La Tierra es **81 veces** más masiva, así que deformó la roca de la Luna mucho más fuerte de lo que la Luna deforma el mar.
+- Frenó su rotación hasta que el bulto dejó de estar desfasado, y eso ocurre cuando rota al mismo ritmo que orbita. Rotación y órbita miden lo mismo: **27,32 días**.
+- Le llevó entre **10 y 100 millones de años**, un instante en sus 4.500. A la Tierra le harían falta 50.000 millones, y el Sol no la va a esperar.
+- Hoy la sujeta un **bulto fósil**: la corteza se enfrió deformada y el centro de masa quedó 2 km corrido del geométrico. Ya no hace falta fricción, basta esa asimetría rígida.
+- No siempre sale 1:1. **Mercurio** rota tres veces cada dos órbitas: con órbita excéntrica el par va como $1/d^3$ y lo decide el perihelio.
 
 ---
 
@@ -207,6 +230,18 @@ Derivo la continuidad respecto de $t$ y meto el movimiento, que da $\partial_t u
 
 - La física del XIX es mecanicista: fuerzas, engranajes, cuerpos rígidos, el éter. Su computadora es **mecánica**: un sintetizador de Fourier de latón.
 - El **transistor**, 1947, es la máquina típica del siglo XX, hija de la mecánica cuántica y la teoría de bandas. No había manera de construirlo antes, ni de imaginarlo.
+
+---
+
+# Para seguir
+
+## Myrl Hendershott, *Lecture 2: The Role of Tidal Dissipation and the Laplace Tidal Equations*
+
+- Notas del programa de verano de dinámica de fluidos geofísicos de Woods Hole. De ahí salen las ecuaciones de marea de Laplace del anexo, y la disipación que explica el retroceso lunar.
+
+## Steacy Dopp Hicks, *Understanding Tides*
+
+- NOAA / CO-OPS, 2006. Sesenta y seis páginas sin cálculo: los dos bultos, los componentes, los datums y el epoch de 19 años. Está gratis en el sitio de NOAA Tides & Currents.
 
 ---
 
